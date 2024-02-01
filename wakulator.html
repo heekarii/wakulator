@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<!-- saved from url=(0022)https://wakulator.xyz/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./wakulator_files/html2canvas.js.다운로드"></script>
+
+    
+    <title>왁큘레이터</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="왁물원 등급 계산기 WAKULATOR">
+    <meta name="author" content="그적미적&amp;이파리맛별사탕&amp;Clouuud">
+    <meta name="keywords" content="왁물원, 왁타버스, 등급계산기, 느그자, 우왁굳">
+    <meta name="url" content="https://wakulator.xyz">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="WAKULATOR">
+    <meta property="og:url" content="https://wakulator.xyz/">
+    <meta property="og:description" content="왁물원 등급 계산기 WAKULATOR">
+    <link rel="icon" href="https://wakulator.xyz/img/mainimg.png">
+    
+    <style>
+        
+        @font-face {
+            font-family: 'Gowun Dodum';
+            font-style: normal;
+            font-weight: 400;
+            src: local('Gowun Dodum Regular'), local('GowunDodum-Regular'), url('/fonts/GowunDodum-Regular.ttf') format('truetype');
+        }
+
+        body, head, footer {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+        
+
+        footer {
+            width: 100%;
+            height: 80px;
+            text-align: center;
+        }
+        .container{
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        footer h6 {
+            line-height: 0;
+        }
+
+        .maker{
+            text-align: left;
+            
+        }
+
+        #progressBar, #progressBar2, #progressBar3, #progressBar4 {
+            height: 15px;
+            border-radius: 10px;
+            background-color: greenyellow;
+            transition: width 1s ease;
+        }
+    </style>
+    
+</head>
+
+
+    <body style="text-align: center; margin-left: auto; margin-right: auto;">
+        <div id="box1" style="margin: 0 auto; max-width: 1500px; width: 95%; transform:translateY(5px); text-align: center; background-color: aliceblue; border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); padding-top: 10px; padding-bottom: 10px;">
+            <img style="display: inline; transform:translateY(5px);" ,="" src="./wakulator_files/wakzoo.png" width="45">
+            <h1 style="display: inline;"> WAKULATOR</h1>
+        </div>
+
+        <br>
+        <div style="text-align: center;">
+            <input id="input1" style="width: 80px; height: 16px; border-radius: 5px; padding: 2px 2px" type="number" name="title" pattern="[0-9]*" inputmode="numeric" placeholder="작성 글">
+            <input id="input2" style="width: 80px; height: 16px; border-radius: 5px; padding: 2px 2px" type="number" name="title" pattern="[0-9]*" inputmode="numeric" placeholder="작성 댓글">
+            <input id="input3" style="width: 80px; height: 16px; border-radius: 5px; padding: 2px 2px" type="number" name="title" pattern="[0-9]*" inputmode="numeric" placeholder="방문수">
+            <input id="input4" style="border-radius: 5px; height: 16px; padding: 2px 2px" type="date" name="day1" placeholder="가입 일자">
+            <input style="border-radius: 5px; padding: 2px 10px" type="button" onclick="Input()" value="입력 완료">
+        </div>
+        
+        <div id="box2" style="margin: 0 auto; max-width: 1500px; width: 95%; display:none; text-align: center; background-color: aliceblue; border-radius: 15px;  box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2);">
+            <h2 id="output"></h2>
+            <h4 style="display: inline;" id="output2-1">현재 나의 등급 :</h4>
+            <img style="display: inline;" id="output2-2" src="https://wakulator.xyz/">
+            <h4 style="display: inline;" id="output2-3">[1]진드기</h4><br>
+            <h4 style="display: inline;" id="output3">가입 13일(1주) 지남</h4><br>
+            <h4 style="display: inline;" id="output4"></h4><br>
+            <img style="display: inline;" id="output5-2" src="https://wakulator.xyz/">
+            <h4 style="display: inline; font-size: 23px;" id="output5">[2] 닭둘기 까지의 진행도</h4><br>
+            <h4 style="display: inline;" id="output6">작성 글 진행도</h4><br>
+            <div id="progressbarbox" style="box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); transform: translateY(-15px); background-color: #f0f0f0; border-radius: 10px; height: 15px; max-width: 500px; width: 80%; text-align: center; margin-left: auto; margin-right: auto;">
+                
+                <div id="progressBar" style="width: 0; height: 15px;">
+                    <h6 id="outputprogress1">0%</h6>
+                </div>
+            </div>
+            <h4 style="display: inline;" id="output7">댓글 수 진행도</h4><br>
+            <div id="progressbarbox2" style="box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); transform: translateY(-15px); background-color: #f0f0f0; border-radius: 10px; height: 15px; max-width: 500px; width: 80%; text-align: center; margin-left: auto; margin-right: auto;">
+                
+                <div id="progressBar2" style="width: 0; height: 15px;">
+                    <h6 id="outputprogress2">0%</h6>
+                </div>
+            </div>
+            <h4 style="display: inline;" id="output8">방문 수 진행도</h4><br>
+            <div id="progressbarbox3" style="box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); transform: translateY(-15px); background-color: #f0f0f0; border-radius: 10px; height: 15px; max-width: 500px; width: 80%; text-align: center; margin-left: auto; margin-right: auto;">
+                
+                <div id="progressBar3" style="width: 0; height: 15px;">
+                    <h6 id="outputprogress3">0%</h6>
+                </div>
+            </div>
+            <h4 style="display: inline;" id="output9">가입 주 진행도</h4><br>
+            <div id="progressbarbox4" style="box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2); transform: translateY(-15px); background-color: #f0f0f0; border-radius: 10px; height: 15px; max-width: 500px; width: 80%; text-align: center; margin-left: auto; margin-right: auto;">
+                
+                <div id="progressBar4" style="width: 0; height: 15px;">
+                    <h6 id="outputprogress4">0%</h6>
+                </div>
+            </div>
+            <br>
+            <h4 style="display: inline;" id="output10">GZA : 0.1 ZDG : 3</h4><br><br>
+            <h4 style="display: inline; font-size: 23px;" id="output11">달성 예상 기간</h4><br><br>
+            <h4 style="display: inline;" id="output12">하루 평균 작성 글 수 : 0.2개</h4><br>
+            <h4 style="display: inline;" id="output13">하루 평균 댓글 수 : 3.2개</h4><br>
+            <h4 style="display: inline;" id="output14">하루 평균 방문 수 : 4.4회</h4><br><br>
+            <img style="display: none;" id="output15-2" src="./wakulator_files/1.png">
+            <h4 style="display: none;" id="output15">진드기 :</h4>
+            <img style="display: none;" id="output16-2" src="./wakulator_files/2.png">
+            <h4 style="display: none;" id="output16">닭둘기 :</h4>
+            <img style="display: none;" id="output17-2" src="./wakulator_files/3.png">
+            <h4 style="display: none;" id="output17">왁무새 :</h4>
+            <img style="display: none;" id="output18-2" src="./wakulator_files/4.png">
+            <h4 style="display: none;" id="output18">침팬치 :</h4>
+            <img style="display: none;" id="output19-2" src="./wakulator_files/5.png">
+            <h4 style="display: none;" id="output19">느그자 :</h4>
+        </div>
+        <br>
+        <button id="captureButton" style="display:none; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); height: 30px; background-color: skyblue; color: white; border-radius: 4px; border: none;">결과표 이미지 저장</button>
+
+        <div id="box3" style="margin: 0 auto; max-width: 1500px; width: 95%; text-align: center; background-color: aliceblue; border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2);">
+            <h2>왁물원 등급표</h2>
+            
+                <img style="display: inline;" src="./wakulator_files/0.png">
+                <h4 style="display: inline;">아메바</h4>
+                <h4 style="display: inline;">: 아메바와 같은 상태</h4>
+            <br>
+                <img style="display: inline;" src="./wakulator_files/1.png">
+                <h4 style="display: inline;">진드기</h4>
+                <h4 style="display: inline;">: 가입 0주·게시글 0개·댓글 1개·방문 수 3회</h4>
+            <br>
+                <img style="display: inline;" src="./wakulator_files/2.png">
+                <h4 style="display: inline;">닭둘기</h4>
+                <h4 style="display: inline;">: 가입 4주·게시글 50개·댓글 250개·방문 수 250회</h4>
+            <br>
+                <img style="display: inline;" src="./wakulator_files/3.png">
+                <h4 style="display: inline;">왁무새</h4>
+                <h4 style="display: inline;">: 가입 12주·게시글 300개·댓글 700개·방문 수 500회</h4>
+            <br>
+                <img style="display: inline;" src="./wakulator_files/4.png">
+                <h4 style="display: inline;">침팬치</h4>
+                <h4 style="display: inline;">: 가입 16주·게시글 700개·댓글 1,500개·방문 수 1,000회</h4>
+            <br>
+                <img style="display: inline;" src="./wakulator_files/5.png">
+                <h4 style="display: inline;">느그자</h4>
+                <h4 style="display: inline;">: 가입 30주·게시글 1,000개·댓글 5,000개·방문 수 5,000회</h4>
+            <br>
+        </div>
+    
+
+
+<footer>
+    <div class="container" style="max-width: 1500px; width: 95%; background-color: #f2f2f2; transform: translateY(30px); border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); padding-top: 10px;">
+        <h6>ⓒ 2023. WAKULATOR All Rights Reserved.</h6>
+        <h6>MADE BY : 그적미적 이파리맛별사탕 Clouuud</h6><br>
+    </div>
+</footer>
+
+
+
+
+<script>
+
+
+    function Input() {
+        var input1 = document.getElementById("input1").value;
+        var input2 = document.getElementById("input2").value;
+        var input3 = document.getElementById("input3").value;
+        var input4 = document.getElementById("input4").value;
+        int1 = parseInt(input1)
+        int2 = parseInt(input2)
+        int3 = parseInt(input3)
+
+        if (isNaN(int1)) {
+            alert("작성 글 수를 확인해주세요.")
+            return
+        }
+        else if (isNaN(int2)) {
+            alert("작성 댓글 수를 확인해주세요.")
+            return
+        }
+        else if (isNaN(int3)) {
+            alert("방문수를 확인해주세요.")
+            return
+        }
+        else if (input4 == "") {
+            alert("가입 일자를 확인해주세요.")
+            return
+        }
+
+        daydiff = getDayDifference(input4, getCurrentDate()) // 가입 일차이
+        weekdiff = Math.floor(daydiff/7) // 가입 주 차이
+
+        if (daydiff < 0) {
+            alert("가입 일자를 확인해주세요.")
+            return
+        }
+
+        if (int1 >= 1000 && int2 >= 5000 && int3 >= 5000 && weekdiff >= 30) {
+            InputResult("느그자", "#C2A237", 5)
+        }
+        else if (int1 >= 700 && int2 >= 1500 && int3 >= 1000 && weekdiff >= 16) {
+            InputResult("침팬치", "#78B85A", 4)
+        }
+        else if (int1 >= 300 && int2 >= 700 && int3 >= 500 && weekdiff >= 12) {
+            InputResult("왁무새", "#78B85A", 3)
+        }
+        else if (int1 >= 50 && int2 >= 250 && int3 >= 250 && weekdiff >= 4) {
+            InputResult("닭둘기", "#6799EC", 2)
+        }
+        else if (int1 >= 0 && int2 >= 1 && int3 >= 3 && weekdiff >= 0) {
+            InputResult("진드기", "#A676E1", 1)
+        }
+        else {
+            InputResult("아메바", "#48A711", 0)
+        }
+
+    }
+
+    function InputResult(result, color, rank) {
+        var input1 = document.getElementById("input1").value;
+        var input2 = document.getElementById("input2").value;
+        var input3 = document.getElementById("input3").value;
+        var input4 = document.getElementById("input4").value;
+        int1 = parseInt(input1)
+        int2 = parseInt(input2)
+        int3 = parseInt(input3)
+        document.getElementById('box1').style.backgroundColor = color;
+        document.getElementById('box2').style.backgroundColor = color;
+        document.getElementById('box2').style.display = "block";
+        document.getElementById('captureButton').style.display = "inline";
+        document.getElementById('box3').style.backgroundColor = color;
+        document.getElementById('output2-2').src = "/rankimg/" + rank + ".png";
+        daydiff = getDayDifference(input4, getCurrentDate()) // 가입 일차이
+        weekdiff = Math.floor(daydiff/7) // 가입 주 차이
+
+        text1 = "현재 나의 등급 : "
+        text1_3 = result
+        text2 = "가입 " + daydiff + "일(" + weekdiff + "주) 지남"
+        text3 = ""
+
+        if (rank == 5) { //느그자일때
+			text4 = "지금까지의 진행도";
+			document.getElementById('output5-2').src = "";
+			value = NextRankValue(4)
+			setTimeout(function () {
+
+				progress1 = (value[0] !== 0) ? (int1 * 100 / value[0]) : 0;
+				document.getElementById('outputprogress1').textContent = (isFinite(progress1) ? progress1.toFixed(3) : '0') + "%";
+				progress1 = (progress1 > 100) ? 100 : progress1;
+				document.getElementById('progressBar').style.width = '100%';
+
+				progress2 = (value[1] !== 0) ? (int2 * 100 / value[1]) : 0;
+				document.getElementById('outputprogress2').textContent = (isFinite(progress2) ? progress2.toFixed(3) : '0') + "%";
+				progress2 = (progress2 > 100) ? 100 : progress2;
+				document.getElementById('progressBar2').style.width = '100%';
+
+				progress3 = (value[2] !== 0) ? (int3 * 100 / value[2]) : 0;
+				document.getElementById('outputprogress3').textContent = (isFinite(progress3) ? progress3.toFixed(3) : '0') + "%";
+				progress3 = (progress3 > 100) ? 100 : progress3;
+				document.getElementById('progressBar3').style.width = '100%';
+
+				progress4 = (value[3] !== 0) ? (weekdiff * 100 / value[3]) : 0;
+				document.getElementById('outputprogress4').textContent = (isFinite(progress4) ? progress4.toFixed(3) : '0') + "%";
+				progress4 = (progress4 > 100) ? 100 : progress4;
+				document.getElementById('progressBar4').style.width = '100%';
+			}, 3);
+				
+
+			text5 = "작성 글 진행도 ( " + int1 + " / " + value[0] + " )";
+			text6 = "댓글 수 진행도 ( " + int2 + " / " + value[1] + " )";
+			text7 = "방문 수 진행도 ( " + int3 + " / " + value[2] + " )";
+			text8 = "가입 주 진행도 ( " + weekdiff + " / " + value[3] + " )";
+        }
+        else {
+			value = NextRankValue(rank);//느그자가 아닐때
+			text4 = value[4] + " 까지의 진행도";
+			plusrank = rank + 1;
+			setTimeout(function () {
+				document.getElementById('output5-2').src = "/rankimg/" + plusrank + ".png";
+
+				progress1 = (value[0] !== 0) ? (int1 * 100 / value[0]) : 0;
+				document.getElementById('outputprogress1').textContent = (isFinite(progress1) ? progress1.toFixed(3) : '0') + "%";
+				progress1 = (progress1 > 100) ? 100 : progress1;
+				document.getElementById('progressBar').style.width = progress1 + '%';
+
+				progress2 = (value[1] !== 0) ? (int2 * 100 / value[1]) : 0;
+				document.getElementById('outputprogress2').textContent = (isFinite(progress2) ? progress2.toFixed(3) : '0') + "%";
+				progress2 = (progress2 > 100) ? 100 : progress2;
+				document.getElementById('progressBar2').style.width = progress2 + '%';
+
+				progress3 = (value[2] !== 0) ? (int3 * 100 / value[2]) : 0;
+				document.getElementById('outputprogress3').textContent = (isFinite(progress3) ? progress3.toFixed(3) : '0') + "%";
+				progress3 = (progress3 > 100) ? 100 : progress3;
+				document.getElementById('progressBar3').style.width = progress3 + '%';
+
+				progress4 = (value[3] !== 0) ? (weekdiff * 100 / value[3]) : 0;
+				document.getElementById('outputprogress4').textContent = (isFinite(progress4) ? progress4.toFixed(3) : '0') + "%";
+				progress4 = (progress4 > 100) ? 100 : progress4;
+				document.getElementById('progressBar4').style.width = progress4 + '%';
+
+			}, 3);
+			text5 = "작성 글 진행도 ( " + int1 + " / " + value[0] + " )";
+			text6 = "댓글 수 진행도 ( " + int2 + " / " + value[1] + " )";
+			text7 = "방문 수 진행도 ( " + int3 + " / " + value[2] + " )";
+			text8 = "가입 주 진행도 ( " + weekdiff + " / " + value[3] + " )";
+        }
+
+        avg1 = int1 / daydiff
+        avg2 = int2 / daydiff
+        avg3 = int3 / daydiff
+
+
+        document.getElementById('output').textContent = "결과표";
+        document.getElementById('output2-1').textContent = text1;
+        document.getElementById('output2-3').textContent = text1_3;
+        document.getElementById('output3').textContent = text2;
+        document.getElementById('output4').textContent = text3;
+        document.getElementById('output5').textContent = text4;
+        document.getElementById('output6').textContent = text5;
+        document.getElementById('output7').textContent = text6;
+        document.getElementById('output8').textContent = text7;
+        document.getElementById('output9').textContent = text8;
+
+        gza = ( int1*5 + int2 + int3 ) / 15000
+        zdg = ( int2 + int3/3 ) / 2
+
+        document.getElementById('output10').textContent = "GZA = " + gza.toFixed(3) + " | ZDG = " + zdg.toFixed(3);
+        document.getElementById('output11').textContent = "달성 예상 기간";
+        document.getElementById('output12').textContent = "하루 평균 작성 글 수 : " + avg1.toFixed(3) + "개";
+        document.getElementById('output13').textContent = "하루 평균 댓글 수 : " + avg2.toFixed(3) + "개";
+        document.getElementById('output14').textContent = "하루 평균 방문 수 : " + avg3.toFixed(3) + "회";
+        
+        document.getElementById('output15').style.display = "none";
+        document.getElementById('output15-2').style.display = "none";
+        document.getElementById('output16').style.display = "none";
+        document.getElementById('output16-2').style.display = "none";
+        document.getElementById('output17').style.display = "none";
+        document.getElementById('output17-2').style.display = "none";
+        document.getElementById('output18').style.display = "none";
+        document.getElementById('output18-2').style.display = "none";
+        document.getElementById('output19').style.display = "none";
+        document.getElementById('output19-2').style.display = "none";
+        
+        for(i=rank;i<5;i++) {
+            t = 15 + i
+            k = i + 1
+            l = NextRankValue(i)
+            document.getElementById('output' + t).innerHTML = l[4] + " : " + GetRankTime(int1, int2, int3, daydiff, rank, i) + "<br>";
+            document.getElementById('output' + t).style.display = "inline";
+            document.getElementById('output' + t + '-2').style.display = "inline";
+        }
+        
+        if (rank == 5) { //느그자일때
+            document.getElementById('output15').style.display = "inline";
+            document.getElementById('output15').innerHTML = "더 이상 달성할 등급이 없어요.<br>으 냄시..";
+        
+        }
+        if (weekdiff == 0) {
+            document.getElementById('output19').innerHTML = document.getElementById('output19').innerHTML + "<br>가입 주가 0이면 계산되지 않을 수 있어요.";
+        }
+        if(int1 === 0 || int2 === 0 || int3 === 0) {
+            document.getElementById('output19').innerHTML = document.getElementById('output19').innerHTML + "<br>다음 등급은 평생 갈 수 없어요...";
+        }
+
+    }
+
+    function GetRankTime(int1, int2, int3, daydiff, rank, k) {
+        weekdiff = Math.floor(daydiff/7) // 가입 주 차이
+        // 90 2300 5000 680 2 3
+        a = NextRankValue(k)
+
+        a1 = daydiff * a[0] / int1
+        a2 = daydiff * a[1] / int2
+        a3 = daydiff * a[2] / int3
+        if (weekdiff !== 0) {
+            a4 = daydiff * a[3] / weekdiff
+            b = Math.floor(Math.max(a1, a2, a3, a4) - daydiff)
+            
+        }
+        else {
+            b = Math.floor(Math.max(a1, a2, a3) - daydiff)
+
+        }
+
+        if (b < 0) {
+            b = 0
+        }
+
+        let today = new Date();
+
+        let futureDate = new Date(today.getTime() + b * 24 * 60 * 60 * 1000);
+        
+        let year = futureDate.getFullYear();
+        let month = String(futureDate.getMonth() + 1).padStart(2, '0');
+        let day = String(futureDate.getDate()).padStart(2, '0');
+
+        // 결과 출력
+        return year + '년 ' + month + '월 ' + day + '일' + ' ( ' + b + '일 후 )'
+        
+        
+
+    }
+
+    function NextRankValue(rank) {
+        if (rank == 0) {
+            return [0, 1, 3, 0, "진드기"] //게시글 댓글 방문 가입주
+        }
+        else if (rank == 1) {
+            return [50, 250, 250, 4, "닭둘기"] //게시글 댓글 방문 가입주
+        }
+        else if (rank == 2) {
+            return [300, 700, 500, 12, "왁무새"] //게시글 댓글 방문 가입주
+        }
+        else if (rank == 3) {
+            return [700, 1500, 1000, 16, "침팬치"] //게시글 댓글 방문 가입주
+        }
+        else if (rank == 4) {
+            return [1000, 5000, 5000, 30, "느그자"] //게시글 댓글 방문 가입주
+        }
+
+    }
+
+
+    // 현재 날짜를 'yyyy-mm-dd' 형식으로 반환하는 함수
+    function getCurrentDate() {
+        var today = new Date();
+
+        var year = today.getFullYear();
+        var month = String(today.getMonth() + 1).padStart(2, '0');
+        var day = String(today.getDate()).padStart(2, '0');
+
+        var currentDate = year + '-' + month + '-' + day;
+        return currentDate;
+    }
+
+    // 두 날짜 사이의 일짜 차이를 계산하는 함수
+    function getDayDifference(firstDate, secondDate) {
+        var date1 = new Date(firstDate);
+        var date2 = new Date(secondDate);
+
+        var timeDifference = date2.getTime() - date1.getTime();
+        var dayDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+        return dayDifference;
+    }
+
+    function ProgressBar() {
+        document.getElementById('progressbar').style.background = "yellow";
+
+    }
+
+    document.getElementById("captureButton").addEventListener("click", function() {
+    document.getElementById('box2').style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)"; // 캡쳐 그림자 버그때문에 그림자 제거후 캡쳐
+    document.getElementById('progressbarbox').style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)";
+    document.getElementById('progressbarbox2').style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)";
+    document.getElementById('progressbarbox3').style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)";
+    document.getElementById('progressbarbox4').style.boxShadow = "0px 0px 0px rgba(0, 0, 0, 0)";
+    html2canvas(document.getElementById("box2")).then(function(canvas) {
+        var link = document.createElement('a');
+        link.href = canvas.toDataURL("image/png");
+        link.download = 'result-' + GetDate() + '.png';
+        link.click();
+        document.getElementById('box2').style.boxShadow = "0px 5px 7px rgba(0, 0, 0, 0.2)"; // 제거된 그림자 복구
+        document.getElementById('progressbarbox').style.boxShadow = "0px 5px 7px rgba(0, 0, 0, 0.2)";
+        document.getElementById('progressbarbox2').style.boxShadow = "0px 5px 7px rgba(0, 0, 0, 0.2)";
+        document.getElementById('progressbarbox3').style.boxShadow = "0px 5px 7px rgba(0, 0, 0, 0.2)";
+        document.getElementById('progressbarbox4').style.boxShadow = "0px 5px 7px rgba(0, 0, 0, 0.2)";
+    });
+    });
+    
+    function GetDate() {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = String(today.getMonth() + 1).padStart(2, '0');
+        var day = String(today.getDate()).padStart(2, '0');
+        return year + '-' + month + '-' + day;
+
+    }
+
+
+</script>
+
+</body></html>
