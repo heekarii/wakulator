@@ -1,0 +1,69 @@
+@font-face {
+    font-family: 'Gowun Dodum';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Gowun Dodum Regular'), local('GowunDodum-Regular'), url('/fonts/GowunDodum-Regular.ttf') format('truetype');
+}
+
+body, head, footer {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+body{
+    text-align: center; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+#box1{
+    margin: 0 auto;
+     max-width: 1500px; 
+     width: 95%; 
+     transform:translateY(5px); 
+     background-color: aliceblue; 
+     border-radius: 15px; 
+     box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); 
+     padding-top: 10px; 
+     padding-bottom: 10px;
+     text-align: center;
+}
+
+#title-img{
+    display: inline; transform:translateY(5px);
+}
+
+
+
+
+footer {
+    width: 100%;
+    height: 80px;
+    text-align: center;
+    position : fixed;
+}
+
+.container{
+    margin: 0 auto;
+    text-align: center;
+    max-width: 1500px; 
+    width: 95%; 
+    background-color: #f2f2f2; 
+    transform: translateY(30px); 
+    border-radius: 15px; 
+    box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); 
+    padding-top: 10px;
+    display: block;
+}
+
+footer h6 {
+    line-height: 0;
+}
+
+
+#progressBar, #progressBar2, #progressBar3, #progressBar4 {
+    height: 15px;
+    border-radius: 10px;
+    background-color: greenyellow;
+    transition: width 1s ease;
+}
+

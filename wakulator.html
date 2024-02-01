@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!-- saved from url=(0022)https://wakulator.xyz/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./wakulator_files/html2canvas.js.다운로드"></script>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="./rankimg/html2canvas.js.다운로드"></script>
 
     
     <title>왁큘레이터</title>
@@ -14,54 +14,14 @@
     <meta property="og:url" content="https://wakulator.xyz/">
     <meta property="og:description" content="왁물원 등급 계산기 WAKULATOR">
     <link rel="icon" href="https://wakulator.xyz/img/mainimg.png">
-    
-    <style>
-        
-        @font-face {
-            font-family: 'Gowun Dodum';
-            font-style: normal;
-            font-weight: 400;
-            src: local('Gowun Dodum Regular'), local('GowunDodum-Regular'), url('/fonts/GowunDodum-Regular.ttf') format('truetype');
-        }
-
-        body, head, footer {
-            font-family: 'Gowun Dodum', sans-serif;
-        }
-        
-
-        footer {
-            width: 100%;
-            height: 80px;
-            text-align: center;
-        }
-        .container{
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        footer h6 {
-            line-height: 0;
-        }
-
-        .maker{
-            text-align: left;
-            
-        }
-
-        #progressBar, #progressBar2, #progressBar3, #progressBar4 {
-            height: 15px;
-            border-radius: 10px;
-            background-color: greenyellow;
-            transition: width 1s ease;
-        }
-    </style>
+    <link rel="stylesheet" href="wakulator.css">
     
 </head>
 
 
-    <body style="text-align: center; margin-left: auto; margin-right: auto;">
-        <div id="box1" style="margin: 0 auto; max-width: 1500px; width: 95%; transform:translateY(5px); text-align: center; background-color: aliceblue; border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); padding-top: 10px; padding-bottom: 10px;">
-            <img style="display: inline; transform:translateY(5px);" ,="" src="./wakulator_files/wakzoo.png" width="45">
+    <body>
+        <div id="box1">
+            <img id="title-img" src="./rankimg/wakzoo.png" width="45">
             <h1 style="display: inline;"> WAKULATOR</h1>
         </div>
 
@@ -117,15 +77,15 @@
             <h4 style="display: inline;" id="output12">하루 평균 작성 글 수 : 0.2개</h4><br>
             <h4 style="display: inline;" id="output13">하루 평균 댓글 수 : 3.2개</h4><br>
             <h4 style="display: inline;" id="output14">하루 평균 방문 수 : 4.4회</h4><br><br>
-            <img style="display: none;" id="output15-2" src="./wakulator_files/1.png">
+            <img style="display: none;" id="output15-2" src="./rankimg/1.png">
             <h4 style="display: none;" id="output15">진드기 :</h4>
-            <img style="display: none;" id="output16-2" src="./wakulator_files/2.png">
+            <img style="display: none;" id="output16-2" src="./rankimg/2.png">
             <h4 style="display: none;" id="output16">닭둘기 :</h4>
-            <img style="display: none;" id="output17-2" src="./wakulator_files/3.png">
+            <img style="display: none;" id="output17-2" src="./rankimg/3.png">
             <h4 style="display: none;" id="output17">왁무새 :</h4>
-            <img style="display: none;" id="output18-2" src="./wakulator_files/4.png">
+            <img style="display: none;" id="output18-2" src="./rankimg/4.png">
             <h4 style="display: none;" id="output18">침팬치 :</h4>
-            <img style="display: none;" id="output19-2" src="./wakulator_files/5.png">
+            <img style="display: none;" id="output19-2" src="./rankimg/5.png">
             <h4 style="display: none;" id="output19">느그자 :</h4>
         </div>
         <br>
@@ -134,27 +94,27 @@
         <div id="box3" style="margin: 0 auto; max-width: 1500px; width: 95%; text-align: center; background-color: aliceblue; border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2);">
             <h2>왁물원 등급표</h2>
             
-                <img style="display: inline;" src="./wakulator_files/0.png">
+                <img style="display: inline;" src="./rankimg/0.png">
                 <h4 style="display: inline;">아메바</h4>
                 <h4 style="display: inline;">: 아메바와 같은 상태</h4>
             <br>
-                <img style="display: inline;" src="./wakulator_files/1.png">
+                <img style="display: inline;" src="./rankimg/1.png">
                 <h4 style="display: inline;">진드기</h4>
                 <h4 style="display: inline;">: 가입 0주·게시글 0개·댓글 1개·방문 수 3회</h4>
             <br>
-                <img style="display: inline;" src="./wakulator_files/2.png">
+                <img style="display: inline;" src="./rankimg/2.png">
                 <h4 style="display: inline;">닭둘기</h4>
                 <h4 style="display: inline;">: 가입 4주·게시글 50개·댓글 250개·방문 수 250회</h4>
             <br>
-                <img style="display: inline;" src="./wakulator_files/3.png">
+                <img style="display: inline;" src="./rankimg/3.png">
                 <h4 style="display: inline;">왁무새</h4>
                 <h4 style="display: inline;">: 가입 12주·게시글 300개·댓글 700개·방문 수 500회</h4>
             <br>
-                <img style="display: inline;" src="./wakulator_files/4.png">
+                <img style="display: inline;" src="./rankimg/4.png">
                 <h4 style="display: inline;">침팬치</h4>
                 <h4 style="display: inline;">: 가입 16주·게시글 700개·댓글 1,500개·방문 수 1,000회</h4>
             <br>
-                <img style="display: inline;" src="./wakulator_files/5.png">
+                <img style="display: inline;" src="./rankimg/5.png">
                 <h4 style="display: inline;">느그자</h4>
                 <h4 style="display: inline;">: 가입 30주·게시글 1,000개·댓글 5,000개·방문 수 5,000회</h4>
             <br>
@@ -163,7 +123,7 @@
 
 
 <footer>
-    <div class="container" style="max-width: 1500px; width: 95%; background-color: #f2f2f2; transform: translateY(30px); border-radius: 15px; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); padding-top: 10px;">
+    <div class="container" style="text-align: center;">
         <h6>ⓒ 2023. WAKULATOR All Rights Reserved.</h6>
         <h6>MADE BY : 그적미적 이파리맛별사탕 Clouuud</h6><br>
     </div>
