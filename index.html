@@ -31,7 +31,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
         <div id="box1">
-            <img id="title-img" src="./rankimg/wakki.png" width="45">
+            <img id="title-img" src="./rankimg/wakzoo.png" width="45">
             <h1 style="display: inline;"> WAKULATOR</h1>
         </div>
 
@@ -88,15 +88,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h4 style="display: inline;" id="output13">하루 평균 댓글 수 : 3.2개</h4><br>
             <h4 style="display: inline;" id="output14">하루 평균 방문 수 : 4.4회</h4><br><br>
             <img style="display: none;" id="output15-2" src="./rankimg/1.png">
-            <h4 style="display: none;" id="output15">노비 :</h4>
+            <h4 style="display: none;" id="output15">진드기 :</h4>
             <img style="display: none;" id="output16-2" src="./rankimg/2.png">
-            <h4 style="display: none;" id="output16">갓수 :</h4>
+            <h4 style="display: none;" id="output16">닭둘기 :</h4>
             <img style="display: none;" id="output17-2" src="./rankimg/3.png">
-            <h4 style="display: none;" id="output17">핫산 :</h4>
+            <h4 style="display: none;" id="output17">왁무새 :</h4>
             <img style="display: none;" id="output18-2" src="./rankimg/4.png">
-            <h4 style="display: none;" id="output18">왁창 :</h4>
+            <h4 style="display: none;" id="output18">침팬치 :</h4>
             <img style="display: none;" id="output19-2" src="./rankimg/5.png">
-            <h4 style="display: none;" id="output19">노숙자 :</h4>
+            <h4 style="display: none;" id="output19">느그자 :</h4>
         </div>
         <br>
         <button id="captureButton" style="display:none; box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.2); height: 30px; background-color: skyblue; color: white; border-radius: 4px; border: none;">결과표 이미지 저장</button>
@@ -105,28 +105,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <h2>우왁끼 등급표</h2>
             
                 <img style="display: inline;" src="./rankimg/0.png">
-                <h4 style="display: inline;">미개</h4>
-                <h4 style="display: inline;">: 가입 후 막 활동을 시작해 어떻게 해야 할 줄 모르는 미개한 상태</h4>
+                <h4 style="display: inline;">아메</h4>
+                <h4 style="display: inline;">: 아메바와 같은 상태</h4>
             <br>
                 <img style="display: inline;" src="./rankimg/1.png">
-                <h4 style="display: inline;">노비</h4>
+                <h4 style="display: inline;">진드기</h4>
                 <h4 style="display: inline;">: 가입 0주·게시글 0개·댓글 1개·방문 수 3회</h4>
             <br>
                 <img style="display: inline;" src="./rankimg/2.png">
-                <h4 style="display: inline;">갓수</h4>
+                <h4 style="display: inline;">닭둘기</h4>
                 <h4 style="display: inline;">: 가입 4주·게시글 50개·댓글 250개·방문 수 250회</h4>
             <br>
                 <img style="display: inline;" src="./rankimg/3.png">
-                <h4 style="display: inline;">핫산</h4>
-                <h4 style="display: inline;">: 가입 4주·게시글 100개·댓글 500개·방문 수 500회</h4>
+                <h4 style="display: inline;">왁무새</h4>
+                <h4 style="display: inline;">: 가입 12주·게시글 300개·댓글 700개·방문 수 500회</h4>
             <br>
                 <img style="display: inline;" src="./rankimg/4.png">
-                <h4 style="display: inline;">왁창</h4>
-                <h4 style="display: inline;">: 가입 12주·게시글 300개·댓글 1,000개·방문 수 1,000회</h4>
+                <h4 style="display: inline;">침팬치</h4>
+                <h4 style="display: inline;">: 가입 16주·게시글 700개·댓글 1,500개·방문 수 1,000회</h4>
             <br>
                 <img style="display: inline;" src="./rankimg/5.png">
-                <h4 style="display: inline;">노숙자</h4>
-                <h4 style="display: inline;">: 가입 24주·게시글 1,000개·댓글 5,000개·방문 수 5,000회</h4>
+                <h4 style="display: inline;">느그자</h4>
+                <h4 style="display: inline;">: 가입 30주·게시글 1,000개·댓글 5,000개·방문 수 5,000회</h4>
             <br>
         </div>
     
@@ -179,23 +179,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             return
         }
 
-        if (int1 >= 1000 && int2 >= 5000 && int3 >= 5000 && weekdiff >= 24) {
-            InputResult("노숙자", "#C2A237", 5)
+        if (int1 >= 1000 && int2 >= 5000 && int3 >= 5000 && weekdiff >= 30) {
+            InputResult("느그자", "#C2A237", 5)
         }
-        else if (int1 >= 300 && int2 >= 1000 && int3 >= 1000 && weekdiff >= 12) {
-            InputResult("왁창", "#78B85A", 4)
+        else if (int1 >= 700 && int2 >= 1500 && int3 >= 1000 && weekdiff >= 16) {
+            InputResult("침팬치", "#78B85A", 4)
         }
-        else if (int1 >= 100 && int2 >= 500 && int3 >= 500 && weekdiff >= 4) {
-            InputResult("핫산", "#78B85A", 3)
+        else if (int1 >= 300 && int2 >= 700 && int3 >= 500 && weekdiff >= 12) {
+            InputResult("왁무새", "#78B85A", 3)
         }
         else if (int1 >= 50 && int2 >= 250 && int3 >= 250 && weekdiff >= 4) {
-            InputResult("갓수", "#6799EC", 2)
+            InputResult("닭둘기", "#6799EC", 2)
         }
         else if (int1 >= 0 && int2 >= 1 && int3 >= 3 && weekdiff >= 0) {
-            InputResult("노비", "#A676E1", 1)
+            InputResult("진드기", "#A676E1", 1)
         }
         else {
-            InputResult("미개", "#48A711", 0)
+            InputResult("아메바", "#48A711", 0)
         }
 
     }
