@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Wanted Sans Variable", "Wanted Sans", sans-serif;
+}
+
+body {
+  overflow-y: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
