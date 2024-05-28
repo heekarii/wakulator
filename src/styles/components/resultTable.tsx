@@ -35,13 +35,10 @@ const _ResultLevelName = styled("h1")<{ isDarkMode: boolean }>`
   font-weight: 600;
 `
 
-const _ResultLevelIcon = styled("div")<{ src: string }>`
+const _ResultLevelIcon = styled("img")`
   width: 48px;
   height: 48px;
   border-radius: 8px;
-
-  background: url("${props => props.src}") center no-repeat;
-  background-size: cover;
 `
 
 const _ResultDetail = styled("span")<{ isDarkMode: boolean }>`

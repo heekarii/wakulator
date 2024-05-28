@@ -7,6 +7,8 @@ import { levelInfo } from "~/data/wakzoo_levels"
 import { ResultTableStyle } from "~/styles/components/resultTable"
 
 import { inputData } from "~/stores/inputData"
+
+import battlemaidLilpa from "~/assets/images/battlemaid_lilpa.webp"
 import { AFREECATV_IMG_CDN, CAFE_IMG_CDN } from "~/constants/externalIcon"
 
 export default function ResultTable(props: { data: typeof inputData; isPrintMode: boolean }) {
@@ -59,10 +61,10 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
               result()!.id === 158
                 ? `${AFREECATV_IMG_CDN}/in/inehine/inehine.jpg`
                 : result()!.id === 700
-                  ? "/images/battlemaid_lilpa.webp"
+                  ? battlemaidLilpa
                   : `${CAFE_IMG_CDN}/${result()!.id}.svg`
             }
-            title={result()!.name}
+            alt={result()!.name}
           />
         </ResultTableStyle.Header>
 
