@@ -50,7 +50,7 @@ const _BlueScreenErrorMessage = styled("span")`
   }
 `
 
-const _BlueScreenOppositeSegu = styled("img")`
+const _BlueScreenEasterEgg = styled("img")`
   position: absolute;
   right: 15.8px;
   bottom: 15.8px;
@@ -65,5 +65,5 @@ export const BlueScreen = Object.assign(_BlueScreen, {
   WrapBox: _BlueScreenWrapBox,
   SadFace: _BlueScreenSadFace,
   ErrorMessage: _BlueScreenErrorMessage,
-  OppositeSegu: _BlueScreenOppositeSegu,
+  EasterEgg: _BlueScreenEasterEgg,
 })

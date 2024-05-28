@@ -16,7 +16,8 @@ const _Result = styled("section")<{ level: number; isPrintMode: boolean }>(
         bottom: -1580px;
         left: -1580px;
         transform: scale(4);
-      ` : "border-radius: 8px;"
+      `
+      : "border-radius: 8px;"
   }
 `,
 )
