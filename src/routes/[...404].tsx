@@ -1,16 +1,45 @@
-import { Title } from "@solidjs/meta";
-import { A } from "@solidjs/router";
+import { createSignal, onMount } from "solid-js"
 
-import { HttpStatusCode } from "@solidjs/start";
+import { Title } from "@solidjs/meta"
+import { A, useBeforeLeave } from "@solidjs/router"
 
-import { BlueScreen } from "~/styles/error/blueScreen";
-import oppositeSegu from "~/assets/images/opposite_segu.svg";
+import { HttpStatusCode } from "@solidjs/start"
+
+import { BlueScreen } from "~/styles/error/blueScreen"
+import oppositeSegu from "~/assets/images/opposite_segu.svg"
+import calcActualHeight from "~/utils/calcActualHeightIos"
 
 export default function NotFound() {
+  const [isLoading, setIsLoading] = createSignal<"TRUE" | "HIDE" | "FALSE">("TRUE")
+
+  onMount(() => {
+    setIsLoading("HIDE")
+
+    setTimeout(() => {
+      setIsLoading("FALSE")
+    }, 158)
+  })
+
+  // S: iOS Height 조정
+  onMount(() => {
+    calcActualHeight();
+    window.addEventListener("resize", calcActualHeight);
+  })
+
+  useBeforeLeave(() => {
+    calcActualHeight();
+    window.removeEventListener("resize", calcActualHeight);
+  })
+  // E: iOS Height 조정
+
   return (
     <>
       <Title>Not Found</Title>
       <HttpStatusCode code={404} />
+
+<div class="loader" data-isLoading={isLoading().toString()}>
+  <div class="loader__spinner" />
+</div>
 
       <BlueScreen>
         <BlueScreen.WrapBox>
@@ -31,10 +60,10 @@ export default function NotFound() {
           src={oppositeSegu}
           alt="뒤집힌 세구~"
           onClick={() => {
-            alert("뒤집힌 세구~");
+            window.open("https://youtu.be/zp_dEdyH_vg")
           }}
         />
       </BlueScreen>
     </>
-  );
+  )
 }

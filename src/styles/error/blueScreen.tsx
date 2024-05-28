@@ -1,8 +1,8 @@
-import { styled } from "solid-styled-components";
+import { styled } from "solid-styled-components"
 
 const _BlueScreen = styled("main")`
   width: 100vw;
-  height: 100vh;
+  height: calc(100 * var(--vh, 1vh));
   background: #467ec6;
 
   user-select: none;
@@ -11,7 +11,7 @@ const _BlueScreen = styled("main")`
   @media (max-width: 768px) {
     text-align: center;
   }
-`;
+`
 
 const _BlueScreenWrapBox = styled("div")`
   display: inline-flex;
@@ -31,13 +31,13 @@ const _BlueScreenWrapBox = styled("div")`
     height: 100%;
     max-width: 304px;
   }
-`;
+`
 
 const _BlueScreenSadFace = styled("h1")`
   color: #ffffff;
   font-size: 158px;
   font-weight: 500;
-`;
+`
 
 const _BlueScreenErrorMessage = styled("span")`
   color: #ffffff;
@@ -48,7 +48,7 @@ const _BlueScreenErrorMessage = styled("span")`
   @media (max-width: 768px) {
     padding-bottom: 158px;
   }
-`;
+`
 
 const _BlueScreenOppositeSegu = styled("img")`
   position: absolute;
@@ -59,11 +59,11 @@ const _BlueScreenOppositeSegu = styled("img")`
   opacity: 0.158;
 
   cursor: pointer;
-`;
+`
 
 export const BlueScreen = Object.assign(_BlueScreen, {
   WrapBox: _BlueScreenWrapBox,
   SadFace: _BlueScreenSadFace,
   ErrorMessage: _BlueScreenErrorMessage,
   OppositeSegu: _BlueScreenOppositeSegu,
-});
+})

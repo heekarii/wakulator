@@ -4,11 +4,70 @@
   font-family: "Wanted Sans Variable", "Wanted Sans", sans-serif;
 }
 
-body {
+#app {
+  height: calc(100 * var(--vh, 1vh));
   overflow-y: hidden;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+}
+
+/* Loader */
+
+.loader {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 3;
+  background: #ffffff;
+
+  opacity: 1;
+}
+
+.loader[data-isLoading="HIDE"] {
+  animation: loader__fadeOut 0.158s linear forwards;
+}
+
+.loader[data-isLoading="FALSE"] {
+  z-index: -999;
+  display: none;
+}
+
+.loader .loader__spinner {
+  width: 48px;
+  height: 48px;
+
+  border: 5px solid #ee6f3c;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+
+  display: inline-block;
+  box-sizing: border-box;
+  animation: loader__rotation 1.58s linear infinite;
+}
+
+@keyframes loader__rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loader__fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

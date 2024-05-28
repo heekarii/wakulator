@@ -1,21 +1,23 @@
-import { styled } from "solid-styled-components";
+import { styled } from "solid-styled-components"
 
 const _Input = styled("section")`
   display: flex;
   gap: 8px;
-`;
+`
 
 const _InputIndividual = styled("input")<{
-  icon: string;
-  value?: string | number;
+  icon: string
+  value?: string | number
 }>(
-  (props) => `
-  display: inline-block;
-  position: relative;
+  props => `
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
 
+  position: relative;
   height: 48px;
   width: 96px;
-  box-sizing: border-box;
 
   border: 0;
   outline: 0;
@@ -68,11 +70,11 @@ const _InputIndividual = styled("input")<{
     background: transparent;
     cursor: pointer;
   }
-`
-);
+`,
+)
 
 const _InputSubmit = styled("button")<{ isEnabled: boolean }>(
-  (props) => `
+  props => `
   height: 48px;
   width: 48px;
   min-width: 48px;
@@ -92,10 +94,10 @@ const _InputSubmit = styled("button")<{ isEnabled: boolean }>(
   transition-property: color, background-color, border-color;
   transition-timing-function: ease-in-out;
   transition-duration: 158ms;
-`
-);
+`,
+)
 
 export const Input = Object.assign(_Input, {
   Individual: _InputIndividual,
   Submit: _InputSubmit,
-});
+})

@@ -1,105 +1,165 @@
-import { For, createSignal, onMount } from "solid-js";
-import { Title } from "@solidjs/meta";
-import { cache, useNavigate, useSearchParams } from "@solidjs/router";
+import { For, Show, createEffect, createSignal, onMount } from "solid-js"
 
-import { validateInput } from "~/data/calcLevel";
-import { getLevelInfo } from "~/data/getLevelInfo";
-import { levelInfo, setLevelInfo } from "~/stores/levelInfo";
+import { Title } from "@solidjs/meta"
+import { useNavigate, useSearchParams, useBeforeLeave } from "@solidjs/router"
 
-import { ContentWrap, InputSide, Main, MainFlex } from "~/styles/main";
-import { Loader } from "~/styles/loader";
+import calcActualHeight from "~/utils/calcActualHeightIos"
+import { validateInput } from "~/utils/calcLevel"
+import { CAFE_IMG_CDN } from "~/constants/externalIcon"
 
-import { Logo } from "~/styles/main/logo";
-import { Input } from "~/styles/main/input";
-import { LevelInfo } from "~/styles/main/levelInfo";
+import { levelInfo } from "~/data/wakzoo_levels"
+import { inputData, setInputData } from "~/stores/inputData"
 
-import Footer from "~/components/Footer";
-import wakzooLogo from "~/assets/images/wakzoo.svg";
-import ResultTable from "~/components/ResultTable";
+import { ContentWrap, InputSide, Main, MainFlex } from "~/styles/main"
 
-const levelInfoCache = cache(getLevelInfo, "levelinfo");
-export const route = { load: () => levelInfoCache() };
+import { Logo } from "~/styles/main/logo"
+import { Input } from "~/styles/main/input"
+import { LevelInfo } from "~/styles/components/levelInfo"
+
+import Footer from "~/components/Footer"
+import ResultTable from "~/components/ResultTable"
+
+import wakzooLogo from "~/assets/images/wakzoo.svg"
 
 export default function Result() {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate()
+  const [searchParams, setSearchParams] = useSearchParams()
 
-  const [articleCount, setArticleCount] = createSignal<number>();
-  const [commentCount, setCommentCount] = createSignal<number>();
-  const [visitCount, setVisitCount] = createSignal<number>();
-  const [date, setDate] = createSignal<string>();
+  const [articleCount, setArticleCount] = createSignal<number>()
+  const [commentCount, setCommentCount] = createSignal<number>()
+  const [visitCount, setVisitCount] = createSignal<number>()
+  const [date, setDate] = createSignal<string>()
 
-  const [isLoading, setIsLoading] = createSignal<boolean>(true);
-  const [isOnceRendered, setIsOnceRendered] = createSignal<boolean>(true);
+  const [isLoading, setIsLoading] = createSignal<"TRUE" | "HIDE" | "FALSE">("TRUE")
+  const [isOnceRendered, setIsOnceRendered] = createSignal<boolean>(true)
+  const [isOkToCalculate, setIsOkToCalculate] = createSignal<boolean>(false)
 
-  onMount(async () => {
+  // Footer에 하트 이스터에그 - 매 새로고침마다 랜덤으로 나오도록
+  const [footerCharacterIndex, setFooterCharacterIndex] = createSignal<number>(0)
+
+  function initData() {
     if (searchParams.data) {
       try {
-        const data = JSON.parse(atob(searchParams.data!));
-        setArticleCount(data.article);
-        setCommentCount(data.comment);
-        setVisitCount(data.visit);
-        setDate(data.date);
+        const data = JSON.parse(atob(searchParams.data!)) as {
+          article: number
+          comment: number
+          visit: number
+          date: string
+        }
 
-        setIsOnceRendered(true);
+        // 실제 입력에 사용할 값 정의
+        setInputData(data)
+
+        // 단순 input value 복구
+        setArticleCount(data.article)
+        setCommentCount(data.comment)
+        setVisitCount(data.visit)
+        setDate(data.date)
+
+        // 프로세스 완료
+        setIsOkToCalculate(true)
+        setIsOnceRendered(true)
       } catch {
-        navigate("/");
+        navigate("/")
       }
+    } else {
+      setInputData({})
     }
 
-    if (levelInfo.length === 0) {
-      setLevelInfo(await levelInfoCache()!);
-      setIsLoading(false);
+    if (articleCount() === 158 && commentCount() === 158 && visitCount() === 158 && date() === "2021-06-22") {
+      // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
+      setFooterCharacterIndex(0)
+    } else {
+      // Footer에 하트 이스터에그 - 매 새로고침마다 랜덤으로 나오도록
+      setFooterCharacterIndex(Math.floor(Math.random() * 6) | 0)
     }
-  });
+  }
+
+  onMount(async () => {
+    initData()
+
+    setTimeout(() => {
+      setIsLoading("HIDE")
+
+      setTimeout(() => {
+        setIsLoading("FALSE")
+      }, 158)
+    }, 10)
+  })
+
+  // S: iOS Height 조정
+  onMount(() => {
+    calcActualHeight();
+    window.addEventListener("resize", calcActualHeight);
+  })
+
+  useBeforeLeave(() => {
+    calcActualHeight();
+    window.removeEventListener("resize", calcActualHeight);
+  })
+  // E: iOS Height 조정
+
+  createEffect(() => {
+    window.addEventListener("popstate", () => {
+      if (!searchParams.data) {
+        setInputData({})
+        setIsOkToCalculate(false)
+      } else {
+        initData()
+      }
+    })
+  })
 
   return (
     <>
       <Title>왁큘레이터 - Wakulator</Title>
 
-      <Loader isLoading={isLoading()}>
-        <Loader.Spinner />
-      </Loader>
+      <div class="loader" data-isLoading={isLoading().toString()}>
+        <div class="loader__spinner" />
+      </div>
 
-      <Main>
+      <Main currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
         <MainFlex>
           <InputSide>
             <ContentWrap
-              onSubmit={async (e) => {
-                e.preventDefault();
-                validateInput(
-                  articleCount(),
-                  commentCount(),
-                  visitCount(),
-                  date()
-                );
+              onSubmit={async e => {
+                e.preventDefault()
+                validateInput(articleCount(), commentCount(), visitCount(), date())
 
+                const data = {
+                  article: articleCount(),
+                  comment: commentCount(),
+                  visit: visitCount(),
+                  date: date(),
+                }
+
+                // 실제 계산할 데이터 정의
+                setInputData(data)
+
+                // 링크 생성
                 setSearchParams({
-                  data: btoa(
-                    JSON.stringify({
-                      article: articleCount(),
-                      comment: commentCount(),
-                      visit: visitCount(),
-                      date: date(),
-                    })
-                  ),
-                });
+                  data: btoa(JSON.stringify(data)),
+                })
+
+                if (data.article === 158 && data.comment === 158 && data.visit === 158 && data.date === "2021-06-22") {
+                  // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
+                  setFooterCharacterIndex(0)
+                }
+
+                // 프로세스 완료
+                setIsOkToCalculate(true)
               }}
             >
-              <Logo
-                currentStep={
-                  searchParams.data && !isLoading() ? "RESULT" : "MAIN"
-                }
-              >
-                <Logo.Image
-                  src={wakzooLogo}
-                  currentStep={
-                    searchParams.data && !isLoading() ? "RESULT" : "MAIN"
-                  }
-                  alt="Wakulator"
-                />
-                <Logo.Text>WAKULATOR</Logo.Text>
-              </Logo>
+              <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = "/" }}>
+                <Logo currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
+                  <Logo.Image
+                    src={wakzooLogo}
+                    currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}
+                    alt="Wakulator"
+                  />
+                  <Logo.Text>WAKULATOR</Logo.Text>
+                </Logo>
+              </a>
 
               <Input>
                 <Input.Individual
@@ -107,9 +167,9 @@ export default function Result() {
                   icon="edit_note"
                   min={0}
                   value={articleCount()}
-                  onInput={(e) => {
-                    setArticleCount(+e.currentTarget.value);
-                    setIsOnceRendered(false);
+                  onInput={e => {
+                    setArticleCount(+e.currentTarget.value)
+                    setIsOnceRendered(false)
                   }}
                   placeholder="게시글"
                   required
@@ -120,9 +180,9 @@ export default function Result() {
                   icon="chat"
                   min={0}
                   value={commentCount()}
-                  onInput={(e) => {
-                    setCommentCount(+e.currentTarget.value);
-                    setIsOnceRendered(false);
+                  onInput={e => {
+                    setCommentCount(+e.currentTarget.value)
+                    setIsOnceRendered(false)
                   }}
                   placeholder="댓글"
                   required
@@ -133,9 +193,9 @@ export default function Result() {
                   icon="visibility"
                   min={0}
                   value={visitCount()}
-                  onInput={(e) => {
-                    setVisitCount(+e.currentTarget.value);
-                    setIsOnceRendered(false);
+                  onInput={e => {
+                    setVisitCount(+e.currentTarget.value)
+                    setIsOnceRendered(false)
                   }}
                   placeholder="방문 수"
                   required
@@ -149,11 +209,11 @@ export default function Result() {
                   value={date()}
                   min="2015-02-26"
                   max={new Date().toISOString().split("T")[0]}
-                  onChange={(e) => {
-                    setDate(e.currentTarget.value);
-                    setIsOnceRendered(false);
+                  onChange={e => {
+                    setDate(e.currentTarget.value)
+                    setIsOnceRendered(false)
                   }}
-                  onKeyDown={(e) => e.preventDefault()}
+                  onKeyDown={e => e.preventDefault()}
                   required
                 />
 
@@ -176,55 +236,58 @@ export default function Result() {
               </Input>
             </ContentWrap>
 
-            <LevelInfo currentStep={!searchParams.data ? "MAIN" : "RESULT"}>
-              <For each={levelInfo}>
-                {(level) => (
-                  <>
-                    <LevelInfo.Title
-                      title={`${level.name} - ${level.description}`}
-                    >
-                      <img
-                        src={`https://ca-fe.pstatic.net/web-mobile/static/img/${level.id}.svg`}
-                        alt={level.name}
-                      />
-                      <LevelInfo.Title.Text>{level.name}</LevelInfo.Title.Text>
-                    </LevelInfo.Title>
-                    <LevelInfo.Description>
-                      {level.id === "0"
-                        ? level.description
-                        : `가입 ${level.criteria.joinWeek}주 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
-                    </LevelInfo.Description>
-                  </>
-                )}
-              </For>
-            </LevelInfo>
+            <Show when={levelInfo}>
+              <LevelInfo
+                currentStep={
+                  inputData?.article !== undefined &&
+                  inputData?.comment !== undefined &&
+                  inputData?.visit !== undefined &&
+                  inputData?.date !== undefined &&
+                  isOkToCalculate()
+                    ? "RESULT"
+                    : "MAIN"
+                }
+              >
+                <For each={levelInfo}>
+                  {level => (
+                    <>
+                      <LevelInfo.Title title={`${level.name} - ${level.description}`}>
+                        <img src={`${CAFE_IMG_CDN}/${level.id}.svg`} alt={level.name} />
+                        <LevelInfo.Title.Text>{level.name}</LevelInfo.Title.Text>
+                      </LevelInfo.Title>
+                      <LevelInfo.Description>
+                        {level.id === "0"
+                          ? level.description
+                          : `가입 ${level.criteria.joinWeek}주 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
+                      </LevelInfo.Description>
+                    </>
+                  )}
+                </For>
+              </LevelInfo>
+            </Show>
           </InputSide>
 
-          {searchParams.data && !isLoading() && (
-            <ResultTable
-              article={articleCount()!}
-              comment={commentCount()!}
-              visit={visitCount()!}
-              date={date()!}
-              isPrintMode={false}
-            />
-          )}
+          <Show
+            when={
+              inputData?.article !== undefined &&
+              inputData?.comment !== undefined &&
+              inputData?.visit !== undefined &&
+              inputData?.date !== undefined &&
+              isOkToCalculate()
+            }
+          >
+            <ResultTable data={inputData} isPrintMode={false} />
+          </Show>
         </MainFlex>
 
-        <Footer />
+        <Footer characterIndex={footerCharacterIndex()} />
       </Main>
 
-      {searchParams.data && !isLoading() && (
+      <Show when={isOkToCalculate()}>
         <div id="tableForPrint">
-          <ResultTable
-            article={articleCount()!}
-            comment={commentCount()!}
-            visit={visitCount()!}
-            date={date()!}
-            isPrintMode={true}
-          />
+          <ResultTable data={inputData} isPrintMode={true} />
         </div>
-      )}
+      </Show>
     </>
-  );
+  )
 }
