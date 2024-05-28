@@ -69,6 +69,9 @@ export default function Result() {
     if (articleCount() === 158 && commentCount() === 158 && visitCount() === 158 && date() === "2021-06-22") {
       // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
       setFooterCharacterIndex(0)
+    } else if (articleCount() === 700 && commentCount() === 700 && visitCount() === 700 && date() === "2021-06-22") {
+      // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
+      setFooterCharacterIndex(2)
     } else {
       // Footer에 하트 이스터에그 - 매 새로고침마다 랜덤으로 나오도록
       setFooterCharacterIndex(Math.floor(Math.random() * 6) | 0)
@@ -89,13 +92,13 @@ export default function Result() {
 
   // S: iOS Height 조정
   onMount(() => {
-    calcActualHeight();
-    window.addEventListener("resize", calcActualHeight);
+    calcActualHeight()
+    window.addEventListener("resize", calcActualHeight)
   })
 
   useBeforeLeave(() => {
-    calcActualHeight();
-    window.removeEventListener("resize", calcActualHeight);
+    calcActualHeight()
+    window.removeEventListener("resize", calcActualHeight)
   })
   // E: iOS Height 조정
 
@@ -146,11 +149,22 @@ export default function Result() {
                   setFooterCharacterIndex(0)
                 }
 
+                if (data.article === 700 && data.comment === 700 && data.visit === 700 && data.date === "2021-06-22") {
+                  // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
+                  setFooterCharacterIndex(2)
+                }
+
                 // 프로세스 완료
                 setIsOkToCalculate(true)
               }}
             >
-              <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = "/" }}>
+              <a
+                href="/"
+                onClick={e => {
+                  e.preventDefault()
+                  window.location.href = "/"
+                }}
+              >
                 <Logo currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
                   <Logo.Image
                     src={wakzooLogo}
@@ -258,7 +272,7 @@ export default function Result() {
                       <LevelInfo.Description>
                         {level.id === "0"
                           ? level.description
-                          : `가입 ${level.criteria.joinWeek}주 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
+                          : `등업 조건 : 가입 ${level.criteria.joinWeek}주 후 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
                       </LevelInfo.Description>
                     </>
                   )}

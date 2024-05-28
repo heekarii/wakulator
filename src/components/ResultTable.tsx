@@ -58,7 +58,9 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
             src={
               result()!.id === 158
                 ? `${AFREECATV_IMG_CDN}/in/inehine/inehine.jpg`
-                : `${CAFE_IMG_CDN}/${result()!.id}.svg`
+                : result()!.id === 700
+                  ? "/images/battlemaid_lilpa.webp"
+                  : `${CAFE_IMG_CDN}/${result()!.id}.svg`
             }
             title={result()!.name}
           />
@@ -156,7 +158,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
             {(result()!.difference.day === 0 ? props.data.visit : props.data.visit / result()!.difference.day).toFixed(
               3,
             )}
-            개
+            회
           </ResultTableStyle.Text.Label>
         </ResultTableStyle.Text>
 
@@ -186,10 +188,11 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                 }}
               </For>
             </Show>
+
             <Show when={result()!.index == 4}>
               <ResultTableStyle.Footer.EstimatedDate>
                 {levelInfo[4].name} :{" "}
-                {calcNextLevelTime(4, props.data.article, props.data.comment, props.data.visit, props.data.date)}
+                {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
               </ResultTableStyle.Footer.EstimatedDate>
 
               <ResultTableStyle.Footer.EstimatedDate>
@@ -201,9 +204,13 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
               <ResultTableStyle.Footer.EstimatedDate>뭔가 아담하시군요.</ResultTableStyle.Footer.EstimatedDate>
             </Show>
 
+            <Show when={result()!.index == 7}>
+              <ResultTableStyle.Footer.EstimatedDate>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate>
+            </Show>
+
             <Show when={result()!.index == 5}>
               <Show
-                when={(Math.random() * 3 | 0) === 3}
+                when={((Math.random() * 2) | 0) === 1}
                 fallback={
                   <>
                     <ResultTableStyle.Footer.EstimatedDate>

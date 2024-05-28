@@ -54,26 +54,41 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
             joinWeek: 4,
           },
         }
-      : levelInfo
-          .map(x => x)
-          .reverse()
-          .find(
-            level =>
-              input.article! >= level.criteria.article &&
-              input.comment! >= level.criteria.comment &&
-              input.visit! >= level.criteria.visit &&
-              weekDifference >= level.criteria.joinWeek,
-          )
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+        ? {
+            id: 700,
+            name: "전투메이드",
+            criteria: {
+              article: 700,
+              comment: 1500,
+              visit: 1000,
+              joinWeek: 16,
+            },
+          }
+        : levelInfo
+            .map(x => x)
+            .reverse()
+            .find(
+              level =>
+                input.article! >= level.criteria.article &&
+                input.comment! >= level.criteria.comment &&
+                input.visit! >= level.criteria.visit &&
+                weekDifference >= level.criteria.joinWeek,
+            )
 
   const levelIndex =
     input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-06-22"
       ? 6
-      : levelInfo.findIndex(x => x.id === result!.id)
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+        ? 7
+        : levelInfo.findIndex(x => x.id === result!.id)
 
   const nextLevel =
     input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-06-22"
       ? levelInfo[2]
-      : levelInfo[levelIndex + 1] || levelInfo[levelIndex]
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+        ? levelInfo[4]
+        : levelInfo[levelIndex + 1] || levelInfo[levelIndex]
 
   const progress = {
     // 0으로 나누지 못하도록 예외 처리
