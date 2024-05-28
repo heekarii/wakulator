@@ -43,7 +43,7 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
   const { day: dayDifference, week: weekDifference } = _calcDifference(new Date(input.date))
 
   const result =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-06-22"
+    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
       ? {
           id: 158,
           name: "아이네",
@@ -54,7 +54,7 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
             joinWeek: 4,
           },
         }
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
         ? {
             id: 700,
             name: "전투메이드",
@@ -77,16 +77,16 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
             )
 
   const levelIndex =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-06-22"
+    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
       ? 6
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
         ? 7
         : levelInfo.findIndex(x => x.id === result!.id)
 
   const nextLevel =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-06-22"
+    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
       ? levelInfo[2]
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2021-06-22"
+      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
         ? levelInfo[4]
         : levelInfo[levelIndex + 1] || levelInfo[levelIndex]
 

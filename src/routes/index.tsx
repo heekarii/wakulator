@@ -66,10 +66,10 @@ export default function Result() {
       setInputData({})
     }
 
-    if (articleCount() === 158 && commentCount() === 158 && visitCount() === 158 && date() === "2021-06-22") {
+    if (articleCount() === 158 && commentCount() === 158 && visitCount() === 158 && date() === "2021-08-28") {
       // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
       setFooterCharacterIndex(0)
-    } else if (articleCount() === 700 && commentCount() === 700 && visitCount() === 700 && date() === "2021-06-22") {
+    } else if (articleCount() === 700 && commentCount() === 700 && visitCount() === 700 && date() === "2022-05-10") {
       // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
       setFooterCharacterIndex(2)
     } else {
@@ -144,12 +144,12 @@ export default function Result() {
                   data: btoa(JSON.stringify(data)),
                 })
 
-                if (data.article === 158 && data.comment === 158 && data.visit === 158 && data.date === "2021-06-22") {
+                if (data.article === 158 && data.comment === 158 && data.visit === 158 && data.date === "2021-08-28") {
                   // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
                   setFooterCharacterIndex(0)
                 }
 
-                if (data.article === 700 && data.comment === 700 && data.visit === 700 && data.date === "2021-06-22") {
+                if (data.article === 700 && data.comment === 700 && data.visit === 700 && data.date === "2022-05-10") {
                   // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
                   setFooterCharacterIndex(2)
                 }
