@@ -70,7 +70,7 @@ const _ResultProgressName = styled("span")<{ isDarkMode: boolean }>`
 `
 
 const _ResultProgressLabel = styled("span")`
-  color: #999999;
+  color: #666666;
   font-size: 12px;
   font-weight: 500;
 `
@@ -79,7 +79,7 @@ const _ResultProgressBackground = styled("div")`
   width: 100%;
   height: 8px;
   border-radius: 8px;
-  background: #999999;
+  background: #666666;
 `
 
 const _ResultProgressOverlay = styled("div")<{
@@ -117,7 +117,7 @@ const _ResultFooterWrapper = styled("section")`
 `
 
 const _ResultEstimatedDate = styled("li")`
-  color: #999999;
+  color: #666666;
   list-style: none;
 
   font-size: 12px;

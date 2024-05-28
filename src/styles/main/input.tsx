@@ -23,7 +23,7 @@ const _InputIndividual = styled("input")<{
   outline: 0;
 
   background: #f2f2f7;
-  background-image: url("/icons/${props.icon}_999999.svg");
+  background-image: url("/icons/${props.icon}_666666.svg");
   background-size: 20px;
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
@@ -85,7 +85,7 @@ const _InputSubmit = styled("button")<{ isEnabled: boolean }>(
 
   ${props.isEnabled ? "cursor: pointer;" : ""}
 
-  background: ${props.isEnabled ? "#ee6f3c" : "#999999"};
+  background: ${props.isEnabled ? "#ee6f3c" : "#666666"};
   background-image: url("/icons/check_ffffff.svg");
   background-size: 24px;
   background-position: center;

@@ -236,7 +236,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
           <Show when={!props.isPrintMode}>
             <ResultTableStyle.Footer.DownloadBtn onClick={() => downloadImage()}>
-              <img src="/icons/download_999999.svg" alt="다운로드" />
+              <img src="/icons/download_666666.svg" alt="다운로드" />
             </ResultTableStyle.Footer.DownloadBtn>
           </Show>
         </ResultTableStyle.Footer>

@@ -30,7 +30,7 @@ const _LevelInfoTitleWrapper = styled("div")`
 `
 
 const _LevelInfoTitleText = styled("span")`
-  color: #999999;
+  color: #666666;
   font-size: 12px;
   font-weight: 500;
   user-select: none;
