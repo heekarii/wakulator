@@ -35,7 +35,7 @@ export default function App() {
 
           <Link rel="canonical" href="https://www.wakulator.xyz/" />
 
-          <Meta name="description" content="왁큘레이터 - 왁물원 등급 계산기R" />
+          <Meta name="description" content="왁큘레이터 - 왁물원 등급 계산기" />
           <Meta name="keywords" content="왁물원, 왁타버스, 등급계산기, 느그자, 우왁굳" />
           <Meta name="url" content="https://www.wakulator.xyz/" />
 
