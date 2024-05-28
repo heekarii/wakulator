@@ -169,7 +169,7 @@ export default function Result() {
                   <Logo.Image
                     src={wakzooLogo}
                     currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}
-                    alt="Wakulator"
+                    alt="Wakulator Logo"
                   />
                   <Logo.Text>WAKULATOR</Logo.Text>
                 </Logo>
@@ -186,6 +186,7 @@ export default function Result() {
                     setIsOnceRendered(false)
                   }}
                   placeholder="게시글"
+                  aria-label="게시글"
                   required
                 ></Input.Individual>
 
@@ -199,6 +200,7 @@ export default function Result() {
                     setIsOnceRendered(false)
                   }}
                   placeholder="댓글"
+                  aria-label="댓글"
                   required
                 />
 
@@ -212,6 +214,7 @@ export default function Result() {
                     setIsOnceRendered(false)
                   }}
                   placeholder="방문 수"
+                  aria-label="방문 수"
                   required
                 />
               </Input>
@@ -246,6 +249,7 @@ export default function Result() {
                     date() === undefined ||
                     isOnceRendered()
                   }
+                  aria-label="계산하기"
                 ></Input.Submit>
               </Input>
             </ContentWrap>
@@ -266,7 +270,7 @@ export default function Result() {
                   {level => (
                     <>
                       <LevelInfo.Title title={`${level.name} - ${level.description}`}>
-                        <img src={`${CAFE_IMG_CDN}/${level.id}.svg`} alt={level.name} />
+                        <img src={`${CAFE_IMG_CDN}/${level.id}.svg`} alt={level.name} width={18} height={18} />
                         <LevelInfo.Title.Text>{level.name}</LevelInfo.Title.Text>
                       </LevelInfo.Title>
                       <LevelInfo.Description>
