@@ -13,8 +13,10 @@ import jinhe from "~/assets/images/jinhe.webp"
 
 export default function NotFound() {
   const [isLoading, setIsLoading] = createSignal<"TRUE" | "HIDE" | "FALSE">("TRUE")
+  const [easterEggRandom, setEasterEggRandom] = createSignal<number>(0)
 
   onMount(() => {
+    setEasterEggRandom((Math.random() * 2) | 0)
     setIsLoading("HIDE")
 
     setTimeout(() => {
@@ -58,26 +60,15 @@ export default function NotFound() {
           </BlueScreen.ErrorMessage>
         </BlueScreen.WrapBox>
 
-        <Show
-          when={((Math.random() * 2) | 0) === 1}
-          fallback={
-            <BlueScreen.EasterEgg
-              src={oppositeSegu}
-              alt="뒤집힌 세구~"
-              onClick={() => {
-                window.open("https://youtu.be/zp_dEdyH_vg")
-              }}
-            />
-          }
-        >
-          <BlueScreen.EasterEgg
-            src={jinhe}
-            alt="우리 차키 이름이 뭐야?"
-            onClick={() => {
-              window.open("https://youtu.be/06al4daDPQ8")
-            }}
-          />
-        </Show>
+        <BlueScreen.EasterEgg
+          src={easterEggRandom() === 0 ? oppositeSegu : jinhe}
+          alt={easterEggRandom() === 0 ? "뒤집힌 세구~" : "우리 차키 이름이 뭐야?"}
+          onClick={() => {
+            easterEggRandom() === 0
+              ? window.open("https://youtu.be/zp_dEdyH_vg")
+              : window.open("https://youtu.be/06al4daDPQ8")
+          }}
+        />
       </BlueScreen>
     </>
   )
