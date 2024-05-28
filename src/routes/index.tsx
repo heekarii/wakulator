@@ -156,6 +156,7 @@ export default function Result() {
 
                 // 프로세스 완료
                 setIsOkToCalculate(true)
+                setIsOnceRendered(true)
               }}
             >
               <a

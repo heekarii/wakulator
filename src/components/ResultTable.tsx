@@ -181,7 +181,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                   return (
                     <ResultTableStyle.Footer.EstimatedDate>
                       {nextLevelTime
-                        ? `${levelInfo[index].name} ${nextLevelTime}`
+                        ? `${levelInfo[index].name} : ${nextLevelTime}`
                         : index === 2
                           ? "침하! 왁물원 공지를 확인해 주세요!"
                           : ""}
