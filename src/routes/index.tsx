@@ -226,6 +226,7 @@ export default function Result() {
                   value={date()}
                   min="2015-02-26"
                   max={new Date().toISOString().split("T")[0]}
+                  aria-label="가입일"
                   onChange={e => {
                     setDate(e.currentTarget.value)
                     setIsOnceRendered(false)
