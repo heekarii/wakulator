@@ -272,7 +272,7 @@ export default function Result() {
                       <LevelInfo.Description>
                         {level.id === "0"
                           ? level.description
-                          : `등업 조건 : 가입 ${level.criteria.joinWeek}주 후 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
+                          : `가입 ${level.criteria.joinWeek}주 후 · 게시글 ${level.criteria.article}개 · 댓글 ${level.criteria.comment}개 · 방문 수 ${level.criteria.visit}회`}
                       </LevelInfo.Description>
                     </>
                   )}
