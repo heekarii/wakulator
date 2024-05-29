@@ -71,3 +71,8 @@ a {
     opacity: 0;
   }
 }
+
+/* Print Area */
+#tableForPrint {
+  background: #ffffff;
+}
