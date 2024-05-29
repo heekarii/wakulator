@@ -8,8 +8,9 @@ import { HttpStatusCode } from "@solidjs/start"
 import calcActualHeight from "~/utils/calcActualHeightIos"
 
 import { BlueScreen } from "~/styles/error/blueScreen"
-import oppositeSegu from "~/assets/images/opposite_segu.svg"
-import jinhe from "~/assets/images/jinhe.webp"
+
+import oppositeSegu from "~/assets/images/easteregg/error/opposite_segu.svg"
+import jinhe from "~/assets/images/easteregg/error/jinhe.webp"
 
 export default function NotFound() {
   const [isLoading, setIsLoading] = createSignal<"TRUE" | "HIDE" | "FALSE">("TRUE")

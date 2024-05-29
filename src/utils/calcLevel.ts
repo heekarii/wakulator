@@ -65,28 +65,56 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
               joinWeek: 16,
             },
           }
-        : levelInfo
-            .map(x => x)
-            .reverse()
-            .find(
-              level =>
-                input.article! >= level.criteria.article &&
-                input.comment! >= level.criteria.comment &&
-                input.visit! >= level.criteria.visit &&
-                weekDifference >= level.criteria.joinWeek,
-            )
+        : input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30"
+          ? {
+              id: 1008,
+              name: "징버거",
+              criteria: {
+                article: 700,
+                comment: 1500,
+                visit: 1000,
+                joinWeek: 16,
+              },
+            }
+          : input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01"
+            ? {
+                id: 116,
+                name: "망냥냥",
+                criteria: {
+                  article: 50,
+                  comment: 250,
+                  visit: 250,
+                  joinWeek: 4,
+                },
+              }
+            : levelInfo
+                .map(x => x)
+                .reverse()
+                .find(
+                  level =>
+                    input.article! >= level.criteria.article &&
+                    input.comment! >= level.criteria.comment &&
+                    input.visit! >= level.criteria.visit &&
+                    weekDifference >= level.criteria.joinWeek,
+                )
 
   const levelIndex =
     input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
       ? 6
       : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
         ? 7
-        : levelInfo.findIndex(x => x.id === result!.id)
+        : input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30"
+          ? 8
+          : input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01"
+            ? 9
+            : levelInfo.findIndex(x => x.id === result!.id)
 
   const nextLevel =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
+    (input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28") ||
+    (input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01")
       ? levelInfo[2]
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
+      : (input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10") ||
+          (input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30")
         ? levelInfo[4]
         : levelInfo[levelIndex + 1] || levelInfo[levelIndex]
 
