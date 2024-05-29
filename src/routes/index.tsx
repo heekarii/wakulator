@@ -5,7 +5,6 @@ import { useNavigate, useSearchParams, useBeforeLeave } from "@solidjs/router"
 
 import calcActualHeight from "~/utils/calcActualHeightIos"
 import { validateInput } from "~/utils/calcLevel"
-import { CAFE_IMG_CDN } from "~/constants/externalIcon"
 
 import { levelInfo } from "~/data/wakzoo_levels"
 import { inputData, setInputData } from "~/stores/inputData"
@@ -69,9 +68,15 @@ export default function Result() {
     if (articleCount() === 158 && commentCount() === 158 && visitCount() === 158 && date() === "2021-08-28") {
       // Footer에 하트 이스터에그 - 아이네 이스터에그에서는 무조건 바이올렛으로
       setFooterCharacterIndex(0)
+    } else if (articleCount() === 1008 && commentCount() === 1008 && visitCount() === 1008 && date() === "2023-04-30") {
+      // Footer에 하트 이스터에그 - 징버거 이스터에그에서는 무조건 블랙으로
+      setFooterCharacterIndex(1)
     } else if (articleCount() === 700 && commentCount() === 700 && visitCount() === 700 && date() === "2022-05-10") {
       // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
       setFooterCharacterIndex(2)
+    } else if (articleCount() === 116 && commentCount() === 116 && visitCount() === 116 && date() === "2022-03-01") {
+      // Footer에 하트 이스터에그 - 비챤 이스터에그에서는 무조건 블랙으로
+      setFooterCharacterIndex(5)
     } else {
       // Footer에 하트 이스터에그 - 매 새로고침마다 랜덤으로 나오도록
       setFooterCharacterIndex(Math.floor(Math.random() * 6) | 0)
@@ -149,9 +154,24 @@ export default function Result() {
                   setFooterCharacterIndex(0)
                 }
 
+                if (
+                  data.article === 1008 &&
+                  data.comment === 1008 &&
+                  data.visit === 1008 &&
+                  data.date === "2023-04-30"
+                ) {
+                  // Footer에 하트 이스터에그 - 징버거 이스터에그에서는 무조건 블랙으로
+                  setFooterCharacterIndex(1)
+                }
+
                 if (data.article === 700 && data.comment === 700 && data.visit === 700 && data.date === "2022-05-10") {
                   // Footer에 하트 이스터에그 - 릴파 이스터에그에서는 무조건 블랙으로
                   setFooterCharacterIndex(2)
+                }
+
+                if (data.article === 116 && data.comment === 116 && data.visit === 116 && data.date === "2022-03-01") {
+                  // Footer에 하트 이스터에그 - 비챤 이스터에그에서는 무조건 블랙으로
+                  setFooterCharacterIndex(5)
                 }
 
                 // 프로세스 완료
@@ -272,7 +292,7 @@ export default function Result() {
                   {level => (
                     <>
                       <LevelInfo.Title title={`${level.name} - ${level.description}`}>
-                        <img src={`${CAFE_IMG_CDN}/${level.id}.svg`} alt={level.name} width={18} height={18} />
+                        <img src={`/icons/levels/${level.id}.svg`} alt={level.name} width={18} height={18} />
                         <LevelInfo.Title.Text>{level.name}</LevelInfo.Title.Text>
                       </LevelInfo.Title>
                       <LevelInfo.Description>

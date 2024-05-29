@@ -8,8 +8,10 @@ import { ResultTableStyle } from "~/styles/components/resultTable"
 
 import { inputData } from "~/stores/inputData"
 
-import battlemaidLilpa from "~/assets/images/battlemaid_lilpa.webp"
-import { AFREECATV_IMG_CDN, CAFE_IMG_CDN } from "~/constants/externalIcon"
+import ineProfile from "~/assets/images/easteregg/profile/ine.webp"
+import battlemaidLilpa from "~/assets/images/easteregg/profile/battlemaid_lilpa.webp"
+import blackJingburger from "~/assets/images/easteregg/profile/black_jingburger.webp"
+import mangnyangnyangViichan from "~/assets/images/easteregg/profile/mangnyangnyang_viichan.webp"
 
 export default function ResultTable(props: { data: typeof inputData; isPrintMode: boolean }) {
   if (
@@ -59,10 +61,14 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
           <ResultTableStyle.Header.LevelIcon
             src={
               result()!.id === 158
-                ? `${AFREECATV_IMG_CDN}/in/inehine/inehine.jpg`
+                ? ineProfile
                 : result()!.id === 700
                   ? battlemaidLilpa
-                  : `${CAFE_IMG_CDN}/${result()!.id}.svg`
+                  : result()!.id === 1008
+                    ? blackJingburger
+                    : result()!.id === 116
+                      ? mangnyangnyangViichan
+                      : `/icons/levels/${result()!.id}.svg`
             }
             alt={result()!.name}
           />
@@ -208,6 +214,14 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
             <Show when={result()!.index == 7}>
               <ResultTableStyle.Footer.EstimatedDate>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate>
+            </Show>
+
+            <Show when={result()!.index == 8}>
+              <ResultTableStyle.Footer.EstimatedDate>좀 모시깽하군요</ResultTableStyle.Footer.EstimatedDate>
+            </Show>
+
+            <Show when={result()!.index == 9}>
+              <ResultTableStyle.Footer.EstimatedDate>느그자의 부름에 응한다..!</ResultTableStyle.Footer.EstimatedDate>
             </Show>
 
             <Show when={result()!.index == 5}>

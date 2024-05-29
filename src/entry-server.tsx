@@ -5,8 +5,6 @@ import { Show, isServer } from "solid-js/web"
 import { extractCss } from "goober"
 
 export default createHandler(() => {
-  const css = extractCss()
-
   return (
     <StartServer
       document={({ assets, children, scripts }) => (
@@ -21,7 +19,7 @@ export default createHandler(() => {
             {assets}
 
             <Show when={isServer}>
-              <style id="_goober">{css || ".loader { background: rgb(255, 255, 255); }"}</style>
+              <style id="_goober">{extractCss() || ".loader { background: #ffffff; }"}</style>
             </Show>
 
             {/* Google Tag Manager */}
