@@ -48,6 +48,9 @@ export default function App() {
           <Meta name="twitter:title" content="WAKULATOR" />
           <Meta name="twitter:description" content="왁큘레이터 - 왁물원 등급 계산기" />
 
+          {/* 네이버 SEO - 소유 확인 */}
+          <Meta name="naver-site-verification" content="0957a708b599810fd51e1c548629e1a4f23f71b1" />
+
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}
