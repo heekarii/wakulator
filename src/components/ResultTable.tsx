@@ -199,7 +199,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
             <Show when={result()!.index == 4}>
               <ResultTableStyle.Footer.EstimatedDate>
-                {levelInfo[4].name} :{" "}
+                {levelInfo[5].name} :{" "}
                 {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
               </ResultTableStyle.Footer.EstimatedDate>
 
@@ -226,7 +226,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
             <Show when={result()!.index == 5}>
               <Show
-                when={((Math.random() * 2) | 0) === 1}
+                when={Math.random() < 0.5}
                 fallback={
                   <>
                     <ResultTableStyle.Footer.EstimatedDate>
