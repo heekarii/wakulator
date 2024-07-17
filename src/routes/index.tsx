@@ -246,7 +246,6 @@ export default function Result() {
                   icon="calendar_month"
                   value={date()}
                   min="2015-02-26"
-                  max={new Date().toISOString().split("T")[0]}
                   aria-label="가입일"
                   onChange={e => {
                     setDate(e.currentTarget.value)
