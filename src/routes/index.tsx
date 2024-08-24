@@ -45,6 +45,11 @@ export default function Result() {
           date: string
         }
 
+        if (!validateInput(data.article, data.comment, data.visit, data.date)) {
+          setIsOkToCalculate(false)
+          return
+        }
+
         // 실제 입력에 사용할 값 정의
         setInputData(data)
 
@@ -113,13 +118,17 @@ export default function Result() {
         <div class="loader__spinner" />
       </div>
 
-      <Main currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
+      <Main currentStep={searchParams.data && isOkToCalculate() && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
         <MainFlex>
           <InputSide>
             <ContentWrap
               onSubmit={async e => {
                 e.preventDefault()
-                validateInput(articleCount(), commentCount(), visitCount(), date())
+
+                if (!validateInput(articleCount(), commentCount(), visitCount(), date())) {
+                  setIsOkToCalculate(false)
+                  return
+                }
 
                 const data = {
                   article: articleCount(),

@@ -31,14 +31,13 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
   const [isNowDownloading, setIsNowDownloading] = createSignal<boolean>(false)
 
   createEffect(() => {
-    const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
-
-    if (!calcResult) {
-      setToast({ message: "등급 계산에 실패했습니다." })
+    try {
+      const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
+      setResult(calcResult)
+    } catch (error) {
+      setToast({ message: (error as Error).message || "등급 계산에 실패했습니다." })
       return null
     }
-
-    setResult(calcResult)
 
     setTimeout(async () => {
       if (domToPngContext()) {
