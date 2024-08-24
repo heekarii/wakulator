@@ -1,13 +1,13 @@
 import { styled } from "solid-styled-components"
 
 export const Main = styled("main")<{ currentStep: "MAIN" | "RESULT" }>`
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: calc(100 * var(--vh, 1vh));
 
   @media (max-width: 768px) {
-    ${props => (props.currentStep === "MAIN" ? "height: calc(calc(100 * var(--vh, 1vh)) - 270px);" : "")}
+    ${props => (props.currentStep === "MAIN" ? "height: calc(100dvh - 270px);" : "")}
   }
 `
 

@@ -16,7 +16,6 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "import/no-unresolved": "off",
-    "import/no-named-as-default": "off",
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
   },
 }

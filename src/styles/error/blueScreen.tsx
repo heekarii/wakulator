@@ -1,8 +1,8 @@
 import { styled } from "solid-styled-components"
 
 const _BlueScreen = styled("main")`
-  width: 100vw;
-  height: calc(100 * var(--vh, 1vh));
+  width: 100dvw;
+  height: 100dvh;
   background: #467ec6;
 
   user-select: none;

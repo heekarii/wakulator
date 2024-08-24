@@ -4,6 +4,7 @@ import { createHandler, StartServer } from "@solidjs/start/server"
 import { Show, isServer } from "solid-js/web"
 import { extractCss } from "goober"
 
+// eslint-disable-next-line react-refresh/only-export-components
 export default createHandler(() => {
   return (
     <StartServer

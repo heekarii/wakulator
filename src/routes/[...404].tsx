@@ -1,11 +1,8 @@
-import { Show, createSignal, onMount } from "solid-js"
+import { createSignal, onMount } from "solid-js"
 
+import { A } from "@solidjs/router"
 import { Title } from "@solidjs/meta"
-import { A, useBeforeLeave } from "@solidjs/router"
-
 import { HttpStatusCode } from "@solidjs/start"
-
-import calcActualHeight from "~/utils/calcActualHeightIos"
 
 import { BlueScreen } from "~/styles/error/blueScreen"
 
@@ -24,18 +21,6 @@ export default function NotFound() {
       setIsLoading("FALSE")
     }, 158)
   })
-
-  // S: iOS Height 조정
-  onMount(() => {
-    calcActualHeight()
-    window.addEventListener("resize", calcActualHeight)
-  })
-
-  useBeforeLeave(() => {
-    calcActualHeight()
-    window.removeEventListener("resize", calcActualHeight)
-  })
-  // E: iOS Height 조정
 
   return (
     <>
@@ -63,11 +48,9 @@ export default function NotFound() {
 
         <BlueScreen.EasterEgg
           src={easterEggRandom() === 0 ? oppositeSegu : jinhe}
-          alt={easterEggRandom() === 0 ? "뒤집힌 세구~" : "우리 차키 이름이 뭐야?"}
+          alt={easterEggRandom() === 0 ? "뒤집힌 세구~" : "혹시 우리 차기는 이름이 뭐야?"}
           onClick={() => {
-            easterEggRandom() === 0
-              ? window.open("https://youtu.be/zp_dEdyH_vg")
-              : window.open("https://youtu.be/06al4daDPQ8")
+            window.open(easterEggRandom() === 0 ? "https://youtu.be/zp_dEdyH_vg" : "https://youtu.be/06al4daDPQ8")
           }}
         />
       </BlueScreen>

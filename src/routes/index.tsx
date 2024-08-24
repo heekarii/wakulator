@@ -1,9 +1,8 @@
 import { For, Show, createEffect, createSignal, onMount } from "solid-js"
 
 import { Title } from "@solidjs/meta"
-import { useNavigate, useSearchParams, useBeforeLeave } from "@solidjs/router"
+import { useNavigate, useSearchParams } from "@solidjs/router"
 
-import calcActualHeight from "~/utils/calcActualHeightIos"
 import { validateInput } from "~/utils/calcLevel"
 
 import { levelInfo } from "~/data/wakzoo_levels"
@@ -94,18 +93,6 @@ export default function Result() {
       }, 158)
     }, 10)
   })
-
-  // S: iOS Height 조정
-  onMount(() => {
-    calcActualHeight()
-    window.addEventListener("resize", calcActualHeight)
-  })
-
-  useBeforeLeave(() => {
-    calcActualHeight()
-    window.removeEventListener("resize", calcActualHeight)
-  })
-  // E: iOS Height 조정
 
   createEffect(() => {
     window.addEventListener("popstate", () => {

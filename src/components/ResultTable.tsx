@@ -1,5 +1,7 @@
 import { For, Show, createEffect, createSignal } from "solid-js"
-import html2canvas from "html2canvas"
+
+import workerUrl from "modern-screenshot/worker?url"
+import { Context, createContext, destroyContext, domToPng } from "modern-screenshot"
 
 import { calcLevel, calcNextLevelTime } from "~/utils/calcLevel"
 
@@ -24,6 +26,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
   }
 
   const [result, setResult] = createSignal<ReturnType<typeof calcLevel>>()
+  const [domToPngContext, setDomToPngContext] = createSignal<Context<HTMLDivElement>>()
 
   createEffect(() => {
     const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
@@ -34,12 +37,35 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
     }
 
     setResult(calcResult)
+
+    setTimeout(async () => {
+      if (domToPngContext()) {
+        destroyContext(domToPngContext()!)
+      }
+
+      const context = await createContext<HTMLDivElement>(document.querySelector("#tableForPrint section")!, {
+        backgroundColor: "#ffffff",
+        debug: import.meta.env.MODE !== "production",
+
+        scale: 6,
+
+        workerUrl,
+        workerNumber: 1,
+      })
+
+      setDomToPngContext(context)
+    }, 10)
   })
 
   function downloadImage() {
-    html2canvas(document.querySelector("#tableForPrint section")!).then(c => {
+    if (!domToPngContext()) {
+      alert("이미지 다운로드에 실패했습니다. (domToPngContext is not initialised)")
+      return
+    }
+
+    domToPng(domToPngContext()!).then((dataUrl: string) => {
       const link = document.createElement("a")
-      link.href = c.toDataURL("image/png")
+      link.href = dataUrl
       link.download = `result-${new Date().toISOString().split("T")[0]}.png`
       link.click()
     })
