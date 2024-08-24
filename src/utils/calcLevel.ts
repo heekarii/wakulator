@@ -32,6 +32,8 @@ export const validateInput = (articleCount?: number, commentCount?: number, visi
     setToast({ message: "입력하신 값을 다시 확인해주세요." })
     return false
   }
+
+  return true
 }
 
 const _calcDifference = (target: Date) => {
