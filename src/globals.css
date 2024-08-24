@@ -5,7 +5,7 @@
 }
 
 #app {
-  height: calc(100 * var(--vh, 1vh));
+  height: 100dvh;
   overflow-y: hidden;
 }
 

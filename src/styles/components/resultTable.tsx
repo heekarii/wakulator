@@ -9,16 +9,8 @@ const _Result = styled("section")<{ level: number; isPrintMode: boolean }>(
   padding: 16px;
   background: ${LEVEL_GRADIENTS[props.level]};
 
-  ${
-    props.isPrintMode
-      ? `
-        position: relative;
-        bottom: -1580px;
-        left: -1580px;
-        transform: scale(4);
-      `
-      : "border-radius: 8px;"
-  }
+
+  ${!props.isPrintMode ? "border-radius: 8px;" : ""}
 `,
 )
 

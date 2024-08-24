@@ -12,12 +12,20 @@ import "./globals.css"
 export default function App() {
   onMount(() => {
     if (import.meta.env.MODE !== "production" && !isServer) {
-      var script = document.createElement("script")
+      const script = document.createElement("script")
       script.src = "https://cdn.jsdelivr.net/npm/eruda"
       document.body.append(script)
 
       script.onload = function () {
-        //@ts-ignore
+        // Init eruda storage
+        window.localStorage.removeItem("eruda-console")
+        window.localStorage.removeItem("eruda-dev-tools")
+        window.localStorage.removeItem("eruda-elements")
+        window.localStorage.removeItem("eruda-entry-button")
+        window.localStorage.removeItem("eruda-resources")
+        window.localStorage.removeItem("eruda-sources")
+
+        //@ts-expect-error - eruda is a global variable
         window.eruda.init()
       }
     }
