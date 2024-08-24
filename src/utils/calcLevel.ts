@@ -1,6 +1,13 @@
 import { levelInfo } from "~/data/wakzoo_levels"
 import { setToast } from "~/stores/toastMessage"
 
+export class InvalidInputError extends Error {
+  constructor() {
+    super("입력하신 값을 다시 확인해주세요.")
+    this.name = "InvalidInputError"
+  }
+}
+
 export const validateInput = (articleCount?: number, commentCount?: number, visitCount?: number, date?: string) => {
   // Validation
   if (
@@ -23,7 +30,7 @@ export const validateInput = (articleCount?: number, commentCount?: number, visi
     new Date(date!) > new Date()
   ) {
     setToast({ message: "입력하신 값을 다시 확인해주세요." })
-    return
+    return false
   }
 }
 
@@ -99,6 +106,8 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
                     weekDifference >= level.criteria.joinWeek,
                 )
 
+  if (!result) throw new InvalidInputError()
+
   const levelIndex =
     input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
       ? 6
@@ -108,7 +117,9 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
           ? 8
           : input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01"
             ? 9
-            : levelInfo.findIndex(x => x.id === result!.id)
+            : levelInfo.findIndex(x => x.id === result.id)
+
+  if (!levelIndex || levelIndex === -1) throw new InvalidInputError()
 
   const nextLevel =
     (input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28") ||
@@ -125,10 +136,6 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
     comment: nextLevel.criteria.comment !== 0 ? (input.comment / nextLevel.criteria.comment) * 100 : 100,
     visit: nextLevel.criteria.visit !== 0 ? (input.visit / nextLevel.criteria.visit) * 100 : 100,
     week: nextLevel.criteria.joinWeek !== 0 ? (weekDifference / nextLevel.criteria.joinWeek) * 100 : 100,
-  }
-
-  if (result === undefined || levelIndex === -1) {
-    return null
   }
 
   return {
