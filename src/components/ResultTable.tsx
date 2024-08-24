@@ -280,7 +280,6 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                     <ResultTableStyle.Footer.EstimatedDate.Text>
                       더 이상 달성할 등급이 없어요...
                     </ResultTableStyle.Footer.EstimatedDate.Text>
-                    <br />
 
                     <ResultTableStyle.Footer.EstimatedDate.Text>으 냄시....</ResultTableStyle.Footer.EstimatedDate.Text>
                   </>
@@ -289,7 +288,6 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                 <ResultTableStyle.Footer.EstimatedDate.Text>
                   느그자 개체수가 너무 많아요...
                 </ResultTableStyle.Footer.EstimatedDate.Text>
-                <br />
 
                 <ResultTableStyle.Footer.EstimatedDate.Text>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate.Text>
               </Show>
