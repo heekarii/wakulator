@@ -108,16 +108,19 @@ const _ResultFooterWrapper = styled("section")`
   justify-content: space-between;
 `
 
-const _ResultEstimatedDate = styled("li")`
+const _ResultEstimatedDate = styled("ul")`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+`
+
+const _ResultEstimatedDateText = styled("li")`
   color: #666666;
   list-style: none;
 
   font-size: 12px;
   font-weight: 400;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
 `
 
 const _ResultDownloadBtn = styled("button")`
@@ -146,7 +149,9 @@ export const ResultTableStyle = Object.assign(_Result, {
     Label: _ResultTextLabel,
   }),
   Footer: Object.assign(_ResultFooterWrapper, {
-    EstimatedDate: _ResultEstimatedDate,
+    EstimatedDate: Object.assign(_ResultEstimatedDate, {
+      Text: _ResultEstimatedDateText,
+    }),
     DownloadBtn: _ResultDownloadBtn,
   }),
 })

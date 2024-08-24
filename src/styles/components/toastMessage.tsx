@@ -27,7 +27,7 @@ const _FadeOutDownAnimation = keyframes`
 const _Container = styled("div")<{ fadeType: "fadeInUp" | "fadeOutDown"; isVisible: boolean }>(
   props => `
     background-color: #666666;
-    padding: 24px 38px;
+    padding: 20px 34px;
     border-radius: 10px;
 
     width: max-content;
@@ -43,16 +43,24 @@ const _Container = styled("div")<{ fadeType: "fadeInUp" | "fadeOutDown"; isVisib
     opacity: 0;
     transform: translate(-50%, 30px);
     animation: ${props.fadeType === "fadeInUp" ? _FadeInUpAnimation : _FadeOutDownAnimation} 0.5s forwards;
+
+    @media (max-width: 768px) {
+        padding: 18px 32px;
+    }
   `,
 )
 
 const _Text = styled("p")`
   color: white;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 600;
   margin: 0px;
   letter-spacing: -0.18px;
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
 `
 
 export const ToastMessageStyle = Object.assign(_Container, {

@@ -69,7 +69,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
     setIsNowDownloading(true)
 
-    if (window.matchMedia("(max-width: 767px)").matches) {
+    if (window.matchMedia("(max-width: 768px)").matches) {
       setToast({ message: "이미지를 만들고 있어요.", duration: null })
     } else {
       setToast({ message: "이미지를 만들고 있어요. 잠시만 기다려 주세요.", duration: null })
@@ -217,7 +217,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
         {/* 결과창 예상 등급변경일 정보 & 다운로드 버튼 */}
         <ResultTableStyle.Footer>
-          <ul>
+          <ResultTableStyle.Footer.EstimatedDate>
             <Show when={result()!.index < 4}>
               <For each={[result()!.index + 1, result()!.index + 2]}>
                 {index => {
@@ -230,43 +230,47 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                   )
 
                   return (
-                    <ResultTableStyle.Footer.EstimatedDate>
+                    <ResultTableStyle.Footer.EstimatedDate.Text>
                       {nextLevelTime
                         ? `${levelInfo[index].name} : ${nextLevelTime}`
                         : index === 2
                           ? "침하! 왁물원 공지를 확인해 주세요!"
                           : ""}
-                    </ResultTableStyle.Footer.EstimatedDate>
+                    </ResultTableStyle.Footer.EstimatedDate.Text>
                   )
                 }}
               </For>
             </Show>
 
             <Show when={result()!.index == 4}>
-              <ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
                 {levelInfo[5].name} :{" "}
                 {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
-              </ResultTableStyle.Footer.EstimatedDate>
+              </ResultTableStyle.Footer.EstimatedDate.Text>
 
-              <ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
                 슬슬 냄시가 나기 시작하는군요.
-              </ResultTableStyle.Footer.EstimatedDate>
+              </ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
             <Show when={result()!.index == 6}>
-              <ResultTableStyle.Footer.EstimatedDate>뭔가 아담하시군요.</ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                뭔가 아담하시군요.
+              </ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
             <Show when={result()!.index == 7}>
-              <ResultTableStyle.Footer.EstimatedDate>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
             <Show when={result()!.index == 8}>
-              <ResultTableStyle.Footer.EstimatedDate>좀 모시깽하군요</ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>좀 모시깽하군요</ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
             <Show when={result()!.index == 9}>
-              <ResultTableStyle.Footer.EstimatedDate>느그자의 부름에 응한다..!</ResultTableStyle.Footer.EstimatedDate>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                느그자의 부름에 응한다..!
+              </ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
             <Show when={result()!.index == 5}>
@@ -274,24 +278,24 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
                 when={Math.random() < 0.5}
                 fallback={
                   <>
-                    <ResultTableStyle.Footer.EstimatedDate>
+                    <ResultTableStyle.Footer.EstimatedDate.Text>
                       더 이상 달성할 등급이 없어요...
-                    </ResultTableStyle.Footer.EstimatedDate>
+                    </ResultTableStyle.Footer.EstimatedDate.Text>
                     <br />
 
-                    <ResultTableStyle.Footer.EstimatedDate>으 냄시....</ResultTableStyle.Footer.EstimatedDate>
+                    <ResultTableStyle.Footer.EstimatedDate.Text>으 냄시....</ResultTableStyle.Footer.EstimatedDate.Text>
                   </>
                 }
               >
-                <ResultTableStyle.Footer.EstimatedDate>
+                <ResultTableStyle.Footer.EstimatedDate.Text>
                   느그자 개체수가 너무 많아요...
-                </ResultTableStyle.Footer.EstimatedDate>
+                </ResultTableStyle.Footer.EstimatedDate.Text>
                 <br />
 
-                <ResultTableStyle.Footer.EstimatedDate>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate>
+                <ResultTableStyle.Footer.EstimatedDate.Text>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate.Text>
               </Show>
             </Show>
-          </ul>
+          </ResultTableStyle.Footer.EstimatedDate>
 
           <Show when={!props.isPrintMode}>
             <ResultTableStyle.Footer.DownloadBtn onClick={() => downloadImage()}>
