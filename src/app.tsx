@@ -5,7 +5,8 @@ import { MetaProvider, Title, Link, Meta } from "@solidjs/meta"
 import { Router } from "@solidjs/router"
 import { FileRoutes } from "@solidjs/start/router"
 
-import { JSDELIVR_CDN, TOSSFACE_CDN, WANTED_SANS_CDN } from "./constants/styles"
+import { JSDELIVR_CDN, TOSSFACE_CDN, WANTED_SANS_CDN } from "~/constants/styles"
+import ToastMessage from "~/components/ToastMessage"
 
 import "./globals.css"
 
@@ -37,9 +38,12 @@ export default function App() {
         <MetaProvider>
           <Title>왁큘레이터 - 왁물원 등급 계산기</Title>
 
-          <Link rel="preconnect" href={JSDELIVR_CDN} crossorigin="anonymous" />
-          <Link rel="stylesheet" href={WANTED_SANS_CDN} />
-          <Link rel="stylesheet" href={TOSSFACE_CDN} />
+          <Link rel="preconnect" href={JSDELIVR_CDN} crossOrigin="anonymous" />
+          <Link rel="preload" href={WANTED_SANS_CDN} crossOrigin="anonymous" as="style" />
+          <Link rel="preload" href={TOSSFACE_CDN} crossOrigin="anonymous" as="style" />
+
+          <Link rel="stylesheet" href={WANTED_SANS_CDN} crossOrigin="anonymous" />
+          <Link rel="stylesheet" href={TOSSFACE_CDN} crossOrigin="anonymous" />
 
           <Link rel="canonical" href="https://www.wakulator.xyz/" />
 
@@ -64,6 +68,7 @@ export default function App() {
       )}
     >
       <FileRoutes />
+      <ToastMessage />
     </Router>
   )
 }

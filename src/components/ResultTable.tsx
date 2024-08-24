@@ -9,6 +9,7 @@ import { levelInfo } from "~/data/wakzoo_levels"
 import { ResultTableStyle } from "~/styles/components/resultTable"
 
 import { inputData } from "~/stores/inputData"
+import { toast, setToast } from "~/stores/toastMessage"
 
 import ineProfile from "~/assets/images/easteregg/profile/ine.webp"
 import battlemaidLilpa from "~/assets/images/easteregg/profile/battlemaid_lilpa.webp"
@@ -27,12 +28,13 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
   const [result, setResult] = createSignal<ReturnType<typeof calcLevel>>()
   const [domToPngContext, setDomToPngContext] = createSignal<Context<HTMLDivElement>>()
+  const [isNowDownloading, setIsNowDownloading] = createSignal<boolean>(false)
 
   createEffect(() => {
     const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
 
     if (!calcResult) {
-      alert("등급 계산에 실패했습니다.")
+      setToast({ message: "등급 계산에 실패했습니다." })
       return null
     }
 
@@ -58,16 +60,33 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
   })
 
   function downloadImage() {
+    if (isNowDownloading()) return
+
     if (!domToPngContext()) {
-      alert("이미지 다운로드에 실패했습니다. (domToPngContext is not initialised)")
+      setToast({ message: "이미지를 저장하는데 문제가 발생했어요." })
       return
     }
 
+    setIsNowDownloading(true)
+
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setToast({ message: "이미지를 만들고 있어요.", duration: null })
+    } else {
+      setToast({ message: "이미지를 만들고 있어요. 잠시만 기다려 주세요." })
+    }
+
     domToPng(domToPngContext()!).then((dataUrl: string) => {
-      const link = document.createElement("a")
-      link.href = dataUrl
-      link.download = `result-${new Date().toISOString().split("T")[0]}.png`
-      link.click()
+      setToast({ ...toast, duration: 1 })
+
+      setTimeout(() => {
+        const link = document.createElement("a")
+        link.href = dataUrl
+        link.download = `result-${new Date().toISOString().split("T")[0]}.png`
+        link.click()
+
+        setToast({ message: "이미지를 저장했어요." })
+        setIsNowDownloading(false)
+      }, 700)
     })
   }
 

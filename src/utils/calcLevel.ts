@@ -1,4 +1,5 @@
 import { levelInfo } from "~/data/wakzoo_levels"
+import { setToast } from "~/stores/toastMessage"
 
 export const validateInput = (articleCount?: number, commentCount?: number, visitCount?: number, date?: string) => {
   // Validation
@@ -21,7 +22,7 @@ export const validateInput = (articleCount?: number, commentCount?: number, visi
     new Date(date!) < new Date("2015-02-25T18:28:00.000Z") ||
     new Date(date!) > new Date()
   ) {
-    alert("입력하신 값을 다시 확인해주세요.")
+    setToast({ message: "입력하신 값을 다시 확인해주세요." })
     return
   }
 }
