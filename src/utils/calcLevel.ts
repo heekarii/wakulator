@@ -108,6 +108,7 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
                     weekDifference >= level.criteria.joinWeek,
                 )
 
+  // 결과가 없는 경우 (Out of range) 에러
   if (!result) throw new InvalidInputError()
 
   const levelIndex =
@@ -121,7 +122,8 @@ export const calcLevel = (input: { article: number; comment: number; visit: numb
             ? 9
             : levelInfo.findIndex(x => x.id === result.id)
 
-  if (!levelIndex || levelIndex === -1) throw new InvalidInputError()
+  // 0 미만의 값이 나오면 에러
+  if (levelIndex < 0) throw new InvalidInputError()
 
   const nextLevel =
     (input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28") ||
