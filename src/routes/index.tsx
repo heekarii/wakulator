@@ -46,7 +46,7 @@ export default function Result() {
         }
 
         if (!validateInput(data.article, data.comment, data.visit, data.date)) {
-          setIsOkToCalculate(false)
+          navigate("/")
           return
         }
 
@@ -126,7 +126,6 @@ export default function Result() {
                 e.preventDefault()
 
                 if (!validateInput(articleCount(), commentCount(), visitCount(), date())) {
-                  setIsOkToCalculate(false)
                   return
                 }
 
