@@ -1,4 +1,4 @@
-import { For, Show, createEffect, createSignal } from "solid-js"
+import { Show, createEffect, createSignal } from "solid-js"
 
 import workerUrl from "modern-screenshot/worker?url"
 import { Context, createContext, destroyContext, domToPng } from "modern-screenshot"
@@ -27,13 +27,46 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
   }
 
   const [result, setResult] = createSignal<ReturnType<typeof calcLevel>>()
+  const [nextLevelTime, setNextLevelTime] = createSignal<
+    {
+      name: string
+      time: ReturnType<typeof calcNextLevelTime>
+    }[]
+  >()
   const [domToPngContext, setDomToPngContext] = createSignal<Context<HTMLDivElement>>()
   const [isNowDownloading, setIsNowDownloading] = createSignal<boolean>(false)
 
   createEffect(() => {
     try {
       const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
+      const nextLevelTimeResult =
+        calcResult.index > 0 && calcResult.index < 4
+          ? [
+              {
+                name: levelInfo[calcResult.index + 1].name,
+                time: calcNextLevelTime(
+                  calcResult.index + 1,
+                  props.data.article!,
+                  props.data.comment!,
+                  props.data.visit!,
+                  props.data.date!,
+                ),
+              },
+              {
+                name: levelInfo[calcResult.index + 2].name,
+                time: calcNextLevelTime(
+                  calcResult.index + 2,
+                  props.data.article!,
+                  props.data.comment!,
+                  props.data.visit!,
+                  props.data.date!,
+                ),
+              },
+            ]
+          : []
+
       setResult(calcResult)
+      setNextLevelTime(nextLevelTimeResult)
     } catch (error) {
       setToast({ message: (error as Error).message || "등급 계산에 실패했습니다." })
       return null
@@ -56,7 +89,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
       setDomToPngContext(context)
     }, 10)
-  })
+  }, [props.data])
 
   function downloadImage() {
     if (isNowDownloading()) return
@@ -214,41 +247,15 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
           </ResultTableStyle.Text.Label>
         </ResultTableStyle.Text>
 
-        {/* 결과창 예상 등급변경일 정보 & 다운로드 버튼 */}
+        {/* 결과창 예상등업일 정보 & 다운로드 버튼 */}
         <ResultTableStyle.Footer>
           <ResultTableStyle.Footer.EstimatedDate>
-            <Show when={result()!.index < 4}>
-              <For each={[result()!.index + 1, result()!.index + 2]}>
-                {index => {
-                  const nextLevelTime = calcNextLevelTime(
-                    index,
-                    props.data.article!,
-                    props.data.comment!,
-                    props.data.visit!,
-                    props.data.date!,
-                  )
-
-                  return (
-                    <ResultTableStyle.Footer.EstimatedDate.Text>
-                      {nextLevelTime
-                        ? `${levelInfo[index].name} : ${nextLevelTime}`
-                        : index === 2
-                          ? "침하! 왁물원 공지를 확인해 주세요!"
-                          : ""}
-                    </ResultTableStyle.Footer.EstimatedDate.Text>
-                  )
-                }}
-              </For>
-            </Show>
-
-            <Show when={result()!.index == 4}>
+            <Show when={result()!.index > 0 && result()!.index < 4 && nextLevelTime()}>
               <ResultTableStyle.Footer.EstimatedDate.Text>
-                {levelInfo[5].name} :{" "}
-                {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
+                {nextLevelTime()![0].name} : {nextLevelTime()![0].time}
               </ResultTableStyle.Footer.EstimatedDate.Text>
-
               <ResultTableStyle.Footer.EstimatedDate.Text>
-                슬슬 냄시가 나기 시작하는군요.
+                {nextLevelTime()![1].name} : {nextLevelTime()![1].time}
               </ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 
@@ -269,6 +276,23 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
             <Show when={result()!.index == 9}>
               <ResultTableStyle.Footer.EstimatedDate.Text>
                 느그자의 부름에 응한다..!
+              </ResultTableStyle.Footer.EstimatedDate.Text>
+            </Show>
+
+            <Show when={result()!.index == 0}>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                침하! 왁물원 공지를 확인해 주세요!
+              </ResultTableStyle.Footer.EstimatedDate.Text>
+            </Show>
+
+            <Show when={result()!.index == 4}>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                {levelInfo[5].name} :{" "}
+                {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
+              </ResultTableStyle.Footer.EstimatedDate.Text>
+
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                슬슬 냄시가 나기 시작하는군요.
               </ResultTableStyle.Footer.EstimatedDate.Text>
             </Show>
 

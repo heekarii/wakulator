@@ -161,30 +161,25 @@ export const calcNextLevelTime = (
   visitCount: number,
   date: string,
 ) => {
-  try {
-    const { now: today, day: dayDifference, week: weekDifference } = _calcDifference(new Date(date))
+  const { now: today, day: dayDifference, week: weekDifference } = _calcDifference(new Date(date))
 
-    const wantedLevelInfo = (levelInfo[wantedLevel] || levelInfo[wantedLevel - 2]).criteria
+  const wantedLevelInfo = (levelInfo[wantedLevel] || levelInfo[wantedLevel - 2]).criteria
 
-    const articleEstimate = (dayDifference * wantedLevelInfo.article) / articleCount
-    const commentEstimate = (dayDifference * wantedLevelInfo.comment) / commentCount
-    const visitEstimate = (dayDifference * wantedLevelInfo.visit) / visitCount
-    const weekEstimate = weekDifference > 0 ? (dayDifference * wantedLevelInfo.joinWeek) / weekDifference : 0
+  const articleEstimate = (dayDifference * wantedLevelInfo.article) / articleCount
+  const commentEstimate = (dayDifference * wantedLevelInfo.comment) / commentCount
+  const visitEstimate = (dayDifference * wantedLevelInfo.visit) / visitCount
+  const weekEstimate = weekDifference > 0 ? (dayDifference * wantedLevelInfo.joinWeek) / weekDifference : 0
 
-    const estimateDay = Math.floor(
-      Math.max(articleEstimate, commentEstimate, visitEstimate, weekEstimate) - dayDifference,
-    )
-    const estimateDate = new Date(today.getTime() + estimateDay * 1000 * 3600 * 24)
+  const estimateDay = Math.floor(
+    Math.max(articleEstimate, commentEstimate, visitEstimate, weekEstimate) - dayDifference,
+  )
+  const estimateDate = new Date(today.getTime() + estimateDay * 1000 * 3600 * 24)
 
-    if (isNaN(estimateDate.getTime())) {
-      return null
-    }
-
-    return `${estimateDate.getFullYear()}년 ${
-      estimateDate.getMonth() + 1
-    }월 ${estimateDate.getDate()}일 (${estimateDay}일 후)`
-  } catch (e) {
-    console.error(e)
-    return "계산에 실패했습니다."
+  if (isNaN(estimateDate.getTime())) {
+    return null
   }
+
+  return `${estimateDate.getFullYear()}년 ${
+    estimateDate.getMonth() + 1
+  }월 ${estimateDate.getDate()}일 (${estimateDay}일 후)`
 }
