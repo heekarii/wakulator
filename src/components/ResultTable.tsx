@@ -72,7 +72,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
     if (window.matchMedia("(max-width: 767px)").matches) {
       setToast({ message: "이미지를 만들고 있어요.", duration: null })
     } else {
-      setToast({ message: "이미지를 만들고 있어요. 잠시만 기다려 주세요." })
+      setToast({ message: "이미지를 만들고 있어요. 잠시만 기다려 주세요.", duration: null })
     }
 
     domToPng(domToPngContext()!).then((dataUrl: string) => {
