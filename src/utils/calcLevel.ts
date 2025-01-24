@@ -25,11 +25,19 @@ export const validateInput = (articleCount?: number, commentCount?: number, visi
     isNaN(commentCount) ||
     isNaN(visitCount) ||
     // Check if the date is invalid
-    !new Date(date) ||
-    new Date(date) < new Date("2015-02-25T18:28:00.000Z") ||
-    new Date(date) > new Date()
+    isNaN(new Date(date).getTime())
   ) {
     setToast({ message: "입력하신 값을 다시 확인해주세요." })
+    return false
+  }
+
+  if (new Date(date) < new Date("2015-02-25T18:28:00.000Z")) {
+    setToast({ message: "가입일은 카페 생성일보다 빠를 수 없어요." })
+    return false
+  }
+
+  if (new Date(date) > new Date()) {
+    setToast({ message: "가입일은 현재보다 미래일 수 없어요." })
     return false
   }
 
@@ -167,25 +175,46 @@ export const calcNextLevelTime = (
   visitCount: number,
   date: string,
 ) => {
-  const { now: today, day: dayDifference, week: weekDifference } = _calcDifference(new Date(date))
+  try {
+    const { now: today, day: dayDifference, week: weekDifference } = _calcDifference(new Date(date))
 
-  const wantedLevelInfo = (levelInfo[wantedLevel] || levelInfo[wantedLevel - 2]).criteria
+    const wantedLevelInfo = (levelInfo[wantedLevel] || levelInfo[wantedLevel - 2]).criteria
 
-  const articleEstimate = (dayDifference * wantedLevelInfo.article) / articleCount
-  const commentEstimate = (dayDifference * wantedLevelInfo.comment) / commentCount
-  const visitEstimate = (dayDifference * wantedLevelInfo.visit) / visitCount
-  const weekEstimate = weekDifference > 0 ? (dayDifference * wantedLevelInfo.joinWeek) / weekDifference : 0
+    if (articleCount <= 0) {
+      throw new Error("게시글을 1개 이상 작성하고 계산해 주세요.")
+    }
 
-  const estimateDay = Math.floor(
-    Math.max(articleEstimate, commentEstimate, visitEstimate, weekEstimate) - dayDifference,
-  )
-  const estimateDate = new Date(today.getTime() + estimateDay * 1000 * 3600 * 24)
+    if (commentCount <= 0) {
+      throw new Error("댓글을 1개 이상 작성하고 계산해 주세요.")
+    }
 
-  if (isNaN(estimateDate.getTime())) {
-    return null
+    if (visitCount <= 0) {
+      throw new Error("1번 이상 카페에 접속하고 계산해 주세요.")
+    }
+
+    if (weekDifference <= 0) {
+      throw new Error("아직 가입한 지 1주일이 되지 않아서, 계산할 수 없어요.")
+    }
+
+    const articleEstimate = (dayDifference * wantedLevelInfo.article) / articleCount
+    const commentEstimate = (dayDifference * wantedLevelInfo.comment) / commentCount
+    const visitEstimate = (dayDifference * wantedLevelInfo.visit) / visitCount
+    const weekEstimate = weekDifference > 0 ? (dayDifference * wantedLevelInfo.joinWeek) / weekDifference : 0
+
+    const estimateDay = Math.floor(
+      Math.max(articleEstimate, commentEstimate, visitEstimate, weekEstimate) - dayDifference,
+    )
+    const estimateDate = new Date(today.getTime() + estimateDay * 1000 * 3600 * 24)
+
+    if (isNaN(estimateDate.getTime())) {
+      throw new Error("계산에 실패했어요.")
+    }
+
+    return `${estimateDate.getFullYear()}년 ${
+      estimateDate.getMonth() + 1
+    }월 ${estimateDate.getDate()}일 (${estimateDay}일 후)`
+  } catch (e: any) {
+    console.error(e)
+    return (e as Error).message || "계산에 실패했어요."
   }
-
-  return `${estimateDate.getFullYear()}년 ${
-    estimateDate.getMonth() + 1
-  }월 ${estimateDate.getDate()}일 (${estimateDay}일 후)`
 }

@@ -214,7 +214,7 @@ export default function ResultTable(props: { readonly data: typeof inputData; re
       setResult(calcResult)
       setNextLevelTime(nextLevelTimeResult)
     } catch (error) {
-      setToast({ message: (error as Error).message || "등급 계산에 실패했습니다." })
+      setToast({ message: (error as Error).message || "등급 계산에 실패했어요." })
       return null
     }
 
