@@ -1,6 +1,6 @@
 import { FooterStyle } from "~/styles/components/footer"
 
-export default function Footer(props: { characterIndex: number }) {
+export default function Footer(props: { readonly characterIndex: number }) {
   const character = ["💜", "💛", "🖤", "❤", "💙", "💚"]
 
   return (

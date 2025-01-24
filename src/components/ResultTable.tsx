@@ -16,7 +16,177 @@ import battlemaidLilpa from "~/assets/images/easteregg/profile/battlemaid_lilpa.
 import blackJingburger from "~/assets/images/easteregg/profile/black_jingburger.webp"
 import mangnyangnyangViichan from "~/assets/images/easteregg/profile/mangnyangnyang_viichan.webp"
 
-export default function ResultTable(props: { data: typeof inputData; isPrintMode: boolean }) {
+// Add this function before ResultTable component
+function getLevelIconSrc(id: string) {
+  if (id === "158") return ineProfile
+  if (id === "700") return battlemaidLilpa
+  if (id === "1008") return blackJingburger
+  if (id === "116") return mangnyangnyangViichan
+
+  return `/icons/levels/${id}.svg`
+}
+
+// Extract progress bar section into a separate component
+function ProgressBars(props: { readonly result: ReturnType<typeof calcLevel>; readonly data: typeof inputData }) {
+  return (
+    <>
+      <ResultTableStyle.Progress>
+        <ResultTableStyle.Progress.Labels>
+          <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>게시글</ResultTableStyle.Progress.Labels.Name>
+          <ResultTableStyle.Progress.Labels.Label>
+            {props.result.progress.article.toFixed(2)}% ({props.data.article}/{props.result.nextLevel.criteria.article})
+          </ResultTableStyle.Progress.Labels.Label>
+        </ResultTableStyle.Progress.Labels>
+        <ResultTableStyle.Progress.Bar>
+          <ResultTableStyle.Progress.Bar.Overlay
+            percentage={props.result.progress.article >= 100 ? 100 : props.result.progress.article}
+            level={props.result.index}
+          />
+        </ResultTableStyle.Progress.Bar>
+      </ResultTableStyle.Progress>
+      <ResultTableStyle.Progress>
+        <ResultTableStyle.Progress.Labels>
+          <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>댓글</ResultTableStyle.Progress.Labels.Name>
+          <ResultTableStyle.Progress.Labels.Label>
+            {props.result.progress.comment.toFixed(2)}% ({props.data.comment}/{props.result.nextLevel.criteria.comment})
+          </ResultTableStyle.Progress.Labels.Label>
+        </ResultTableStyle.Progress.Labels>
+        <ResultTableStyle.Progress.Bar>
+          <ResultTableStyle.Progress.Bar.Overlay
+            percentage={props.result.progress.comment >= 100 ? 100 : props.result.progress.comment}
+            level={props.result.index}
+          />
+        </ResultTableStyle.Progress.Bar>
+      </ResultTableStyle.Progress>
+      <ResultTableStyle.Progress>
+        <ResultTableStyle.Progress.Labels>
+          <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>방문수</ResultTableStyle.Progress.Labels.Name>
+          <ResultTableStyle.Progress.Labels.Label>
+            {props.result.progress.visit.toFixed(2)}% ({props.data.visit}/{props.result.nextLevel.criteria.visit})
+          </ResultTableStyle.Progress.Labels.Label>
+        </ResultTableStyle.Progress.Labels>
+        <ResultTableStyle.Progress.Bar>
+          <ResultTableStyle.Progress.Bar.Overlay
+            percentage={props.result.progress.visit >= 100 ? 100 : props.result.progress.visit}
+            level={props.result.index}
+          />
+        </ResultTableStyle.Progress.Bar>
+      </ResultTableStyle.Progress>
+      <ResultTableStyle.Progress>
+        <ResultTableStyle.Progress.Labels>
+          <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>가입 주수</ResultTableStyle.Progress.Labels.Name>
+          <ResultTableStyle.Progress.Labels.Label>
+            {props.result.progress.week.toFixed(2)}% ({props.result.difference.week}/
+            {props.result.nextLevel.criteria.joinWeek})
+          </ResultTableStyle.Progress.Labels.Label>
+        </ResultTableStyle.Progress.Labels>
+        <ResultTableStyle.Progress.Bar>
+          <ResultTableStyle.Progress.Bar.Overlay
+            percentage={props.result.progress.week >= 100 ? 100 : props.result.progress.week}
+            level={props.result.index}
+          />
+        </ResultTableStyle.Progress.Bar>
+      </ResultTableStyle.Progress>
+    </>
+  )
+}
+
+// Extract footer content into a separate component
+function FooterContent(props: { readonly result: ReturnType<typeof calcLevel>; readonly nextLevelTime: any }) {
+  return (
+    <ResultTableStyle.Footer.EstimatedDate>
+      <Show when={props.result.index > 0 && props.result.index < 4 && props.nextLevelTime}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          {props.nextLevelTime[0].name} : {props.nextLevelTime[0].time}
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          {props.nextLevelTime[1].name} : {props.nextLevelTime[1].time}
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 6}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>뭔가 아담하시군요.</ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 7}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 8}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>좀 모시깽하군요</ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 9}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          느그자의 부름에 응한다..!
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 0}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          침하! 왁물원 공지를 확인해 주세요!
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 4}>
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          {props.nextLevelTime[0].name} : {props.nextLevelTime[0].time}
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+
+        <ResultTableStyle.Footer.EstimatedDate.Text>
+          슬슬 냄시가 나기 시작하는군요.
+        </ResultTableStyle.Footer.EstimatedDate.Text>
+      </Show>
+
+      <Show when={props.result.index == 5}>
+        <Show
+          when={Math.random() < 0.5}
+          fallback={
+            <>
+              <ResultTableStyle.Footer.EstimatedDate.Text>
+                더 이상 달성할 등급이 없어요...
+              </ResultTableStyle.Footer.EstimatedDate.Text>
+
+              <ResultTableStyle.Footer.EstimatedDate.Text>으 냄시....</ResultTableStyle.Footer.EstimatedDate.Text>
+            </>
+          }
+        >
+          <ResultTableStyle.Footer.EstimatedDate.Text>
+            느그자 개체수가 너무 많아요...
+          </ResultTableStyle.Footer.EstimatedDate.Text>
+
+          <ResultTableStyle.Footer.EstimatedDate.Text>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate.Text>
+        </Show>
+      </Show>
+    </ResultTableStyle.Footer.EstimatedDate>
+  )
+}
+
+function getNextLevelTimes(calcResult: ReturnType<typeof calcLevel>, data: typeof inputData) {
+  if (!calcResult.index) return []
+
+  if (calcResult.index >= 4) {
+    return [
+      {
+        name: levelInfo[5].name,
+        time: calcNextLevelTime(5, data.article!, data.comment!, data.visit!, data.date!),
+      },
+    ]
+  }
+
+  return [
+    {
+      name: levelInfo[calcResult.index + 1].name,
+      time: calcNextLevelTime(calcResult.index + 1, data.article!, data.comment!, data.visit!, data.date!),
+    },
+    {
+      name: levelInfo[calcResult.index + 2].name,
+      time: calcNextLevelTime(calcResult.index + 2, data.article!, data.comment!, data.visit!, data.date!),
+    },
+  ]
+}
+
+export default function ResultTable(props: { readonly data: typeof inputData; readonly isPrintMode: boolean }) {
   if (
     props.data.article === undefined ||
     props.data.comment === undefined ||
@@ -39,31 +209,7 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
   createEffect(() => {
     try {
       const calcResult = calcLevel(props.data as { article: number; comment: number; visit: number; date: string })
-      const nextLevelTimeResult =
-        calcResult.index > 0 && calcResult.index < 4
-          ? [
-              {
-                name: levelInfo[calcResult.index + 1].name,
-                time: calcNextLevelTime(
-                  calcResult.index + 1,
-                  props.data.article!,
-                  props.data.comment!,
-                  props.data.visit!,
-                  props.data.date!,
-                ),
-              },
-              {
-                name: levelInfo[calcResult.index + 2].name,
-                time: calcNextLevelTime(
-                  calcResult.index + 2,
-                  props.data.article!,
-                  props.data.comment!,
-                  props.data.visit!,
-                  props.data.date!,
-                ),
-              },
-            ]
-          : []
+      const nextLevelTimeResult = getNextLevelTimes(calcResult, props.data)
 
       setResult(calcResult)
       setNextLevelTime(nextLevelTimeResult)
@@ -91,9 +237,9 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
     }, 10)
   }, [props.data])
 
-  function downloadImage() {
+  // Extract image download logic
+  const handleImageDownload = () => {
     if (isNowDownloading()) return
-
     if (!domToPngContext()) {
       setToast({ message: "이미지를 저장하는데 문제가 발생했어요." })
       return
@@ -135,84 +281,11 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
             </ResultTableStyle.Header.Detail>
           </div>
 
-          <ResultTableStyle.Header.LevelIcon
-            src={
-              result()!.id === 158
-                ? ineProfile
-                : result()!.id === 700
-                  ? battlemaidLilpa
-                  : result()!.id === 1008
-                    ? blackJingburger
-                    : result()!.id === 116
-                      ? mangnyangnyangViichan
-                      : `/icons/levels/${result()!.id}.svg`
-            }
-            alt={result()!.name}
-          />
+          <ResultTableStyle.Header.LevelIcon src={getLevelIconSrc(result()!.id)} alt={result()!.name} />
         </ResultTableStyle.Header>
 
         {/* 결과창 프로그레스바 그룹 */}
-        <>
-          <ResultTableStyle.Progress>
-            <ResultTableStyle.Progress.Labels>
-              <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>게시글</ResultTableStyle.Progress.Labels.Name>
-              <ResultTableStyle.Progress.Labels.Label>
-                {result()!.progress.article.toFixed(2)}% ({props.data.article}/{result()!.nextLevel.criteria.article})
-              </ResultTableStyle.Progress.Labels.Label>
-            </ResultTableStyle.Progress.Labels>
-            <ResultTableStyle.Progress.Bar>
-              <ResultTableStyle.Progress.Bar.Overlay
-                percentage={result()!.progress.article >= 100 ? 100 : result()!.progress.article}
-                level={result()!.index}
-              />
-            </ResultTableStyle.Progress.Bar>
-          </ResultTableStyle.Progress>
-          <ResultTableStyle.Progress>
-            <ResultTableStyle.Progress.Labels>
-              <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>댓글</ResultTableStyle.Progress.Labels.Name>
-              <ResultTableStyle.Progress.Labels.Label>
-                {result()!.progress.comment.toFixed(2)}% ({props.data.comment}/{result()!.nextLevel.criteria.comment})
-              </ResultTableStyle.Progress.Labels.Label>
-            </ResultTableStyle.Progress.Labels>
-            <ResultTableStyle.Progress.Bar>
-              <ResultTableStyle.Progress.Bar.Overlay
-                percentage={result()!.progress.comment >= 100 ? 100 : result()!.progress.comment}
-                level={result()!.index}
-              />
-            </ResultTableStyle.Progress.Bar>
-          </ResultTableStyle.Progress>
-          <ResultTableStyle.Progress>
-            <ResultTableStyle.Progress.Labels>
-              <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>방문수</ResultTableStyle.Progress.Labels.Name>
-              <ResultTableStyle.Progress.Labels.Label>
-                {result()!.progress.visit.toFixed(2)}% ({props.data.visit}/{result()!.nextLevel.criteria.visit})
-              </ResultTableStyle.Progress.Labels.Label>
-            </ResultTableStyle.Progress.Labels>
-            <ResultTableStyle.Progress.Bar>
-              <ResultTableStyle.Progress.Bar.Overlay
-                percentage={result()!.progress.visit >= 100 ? 100 : result()!.progress.visit}
-                level={result()!.index}
-              />
-            </ResultTableStyle.Progress.Bar>
-          </ResultTableStyle.Progress>
-          <ResultTableStyle.Progress>
-            <ResultTableStyle.Progress.Labels>
-              <ResultTableStyle.Progress.Labels.Name isDarkMode={false}>
-                가입 주수
-              </ResultTableStyle.Progress.Labels.Name>
-              <ResultTableStyle.Progress.Labels.Label>
-                {result()!.progress.week.toFixed(2)}% ({result()!.difference.week}/
-                {result()!.nextLevel.criteria.joinWeek})
-              </ResultTableStyle.Progress.Labels.Label>
-            </ResultTableStyle.Progress.Labels>
-            <ResultTableStyle.Progress.Bar>
-              <ResultTableStyle.Progress.Bar.Overlay
-                percentage={result()!.progress.week >= 100 ? 100 : result()!.progress.week}
-                level={result()!.index}
-              />
-            </ResultTableStyle.Progress.Bar>
-          </ResultTableStyle.Progress>
-        </>
+        <ProgressBars result={result()!} data={props.data} />
 
         {/* 결과창 상세 정보 */}
         <ResultTableStyle.Text>
@@ -249,77 +322,10 @@ export default function ResultTable(props: { data: typeof inputData; isPrintMode
 
         {/* 결과창 예상등업일 정보 & 다운로드 버튼 */}
         <ResultTableStyle.Footer>
-          <ResultTableStyle.Footer.EstimatedDate>
-            <Show when={result()!.index > 0 && result()!.index < 4 && nextLevelTime()}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                {nextLevelTime()![0].name} : {nextLevelTime()![0].time}
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                {nextLevelTime()![1].name} : {nextLevelTime()![1].time}
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 6}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                뭔가 아담하시군요.
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 7}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>철컥 탕탕탕탕탕</ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 8}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>좀 모시깽하군요</ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 9}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                느그자의 부름에 응한다..!
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 0}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                침하! 왁물원 공지를 확인해 주세요!
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 4}>
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                {levelInfo[5].name} :{" "}
-                {calcNextLevelTime(5, props.data.article, props.data.comment, props.data.visit, props.data.date)}
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-
-              <ResultTableStyle.Footer.EstimatedDate.Text>
-                슬슬 냄시가 나기 시작하는군요.
-              </ResultTableStyle.Footer.EstimatedDate.Text>
-            </Show>
-
-            <Show when={result()!.index == 5}>
-              <Show
-                when={Math.random() < 0.5}
-                fallback={
-                  <>
-                    <ResultTableStyle.Footer.EstimatedDate.Text>
-                      더 이상 달성할 등급이 없어요...
-                    </ResultTableStyle.Footer.EstimatedDate.Text>
-
-                    <ResultTableStyle.Footer.EstimatedDate.Text>으 냄시....</ResultTableStyle.Footer.EstimatedDate.Text>
-                  </>
-                }
-              >
-                <ResultTableStyle.Footer.EstimatedDate.Text>
-                  느그자 개체수가 너무 많아요...
-                </ResultTableStyle.Footer.EstimatedDate.Text>
-
-                <ResultTableStyle.Footer.EstimatedDate.Text>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate.Text>
-              </Show>
-            </Show>
-          </ResultTableStyle.Footer.EstimatedDate>
+          <FooterContent result={result()!} nextLevelTime={nextLevelTime()} />
 
           <Show when={!props.isPrintMode}>
-            <ResultTableStyle.Footer.DownloadBtn onClick={() => downloadImage()}>
+            <ResultTableStyle.Footer.DownloadBtn onClick={handleImageDownload}>
               <img src="/icons/download_666666.svg" alt="다운로드" />
             </ResultTableStyle.Footer.DownloadBtn>
           </Show>

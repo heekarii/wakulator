@@ -17,17 +17,17 @@ export const validateInput = (articleCount?: number, commentCount?: number, visi
     visitCount === undefined ||
     date === undefined ||
     // Check if the values are negative
-    articleCount! < 0 ||
-    commentCount! < 0 ||
-    visitCount! < 0 ||
+    articleCount < 0 ||
+    commentCount < 0 ||
+    visitCount < 0 ||
     // Check if the values are not numbers
-    isNaN(articleCount!) ||
-    isNaN(articleCount!) ||
-    isNaN(articleCount!) ||
+    isNaN(articleCount) ||
+    isNaN(commentCount) ||
+    isNaN(visitCount) ||
     // Check if the date is invalid
-    !new Date(date!) ||
-    new Date(date!) < new Date("2015-02-25T18:28:00.000Z") ||
-    new Date(date!) > new Date()
+    !new Date(date) ||
+    new Date(date) < new Date("2015-02-25T18:28:00.000Z") ||
+    new Date(date) > new Date()
   ) {
     setToast({ message: "입력하신 값을 다시 확인해주세요." })
     return false
@@ -49,108 +49,114 @@ const _calcDifference = (target: Date) => {
   }
 }
 
-export const calcLevel = (input: { article: number; comment: number; visit: number; date: string }) => {
-  const { day: dayDifference, week: weekDifference } = _calcDifference(new Date(input.date))
+function checkEasterEgg(input: { article: number; comment: number; visit: number; date: string }) {
+  if (input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28") {
+    return {
+      id: "158",
+      name: "아이네",
+      index: 6,
+      criteria: {
+        article: 50,
+        comment: 250,
+        visit: 250,
+        joinWeek: 4,
+      },
+    }
+  }
 
-  const result =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
-      ? {
-          id: 158,
-          name: "아이네",
-          criteria: {
-            article: 50,
-            comment: 250,
-            visit: 250,
-            joinWeek: 4,
-          },
-        }
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
-        ? {
-            id: 700,
-            name: "전투메이드",
-            criteria: {
-              article: 700,
-              comment: 1500,
-              visit: 1000,
-              joinWeek: 16,
-            },
-          }
-        : input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30"
-          ? {
-              id: 1008,
-              name: "징버거",
-              criteria: {
-                article: 700,
-                comment: 1500,
-                visit: 1000,
-                joinWeek: 16,
-              },
-            }
-          : input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01"
-            ? {
-                id: 116,
-                name: "망냥냥",
-                criteria: {
-                  article: 50,
-                  comment: 250,
-                  visit: 250,
-                  joinWeek: 4,
-                },
-              }
-            : levelInfo
-                .map(x => x)
-                .reverse()
-                .find(
-                  level =>
-                    input.article! >= level.criteria.article &&
-                    input.comment! >= level.criteria.comment &&
-                    input.visit! >= level.criteria.visit &&
-                    weekDifference >= level.criteria.joinWeek,
-                )
+  if (input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10") {
+    return {
+      id: "700",
+      name: "전투메이드",
+      index: 7,
+      criteria: {
+        article: 700,
+        comment: 1500,
+        visit: 1000,
+        joinWeek: 16,
+      },
+    }
+  }
 
-  // 결과가 없는 경우 (Out of range) 에러
-  if (!result) throw new InvalidInputError()
+  if (input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30") {
+    return {
+      id: "1008",
+      name: "징버거",
+      index: 8,
+      criteria: {
+        article: 700,
+        comment: 1500,
+        visit: 1000,
+        joinWeek: 16,
+      },
+    }
+  }
 
-  const levelIndex =
-    input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28"
-      ? 6
-      : input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10"
-        ? 7
-        : input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30"
-          ? 8
-          : input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01"
-            ? 9
-            : levelInfo.findIndex(x => x.id === result.id)
+  if (input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01") {
+    return {
+      id: "116",
+      name: "망냥냥",
+      index: 9,
+      criteria: {
+        article: 50,
+        comment: 250,
+        visit: 250,
+        joinWeek: 4,
+      },
+    }
+  }
 
-  // 0 미만의 값이 나오면 에러
-  if (levelIndex < 0) throw new InvalidInputError()
+  return null
+}
 
-  const nextLevel =
-    (input.article === 158 && input.comment === 158 && input.visit === 158 && input.date === "2021-08-28") ||
-    (input.article === 116 && input.comment === 116 && input.visit === 116 && input.date === "2022-03-01")
-      ? levelInfo[2]
-      : (input.article === 700 && input.comment === 700 && input.visit === 700 && input.date === "2022-05-10") ||
-          (input.article === 1008 && input.comment === 1008 && input.visit === 1008 && input.date === "2023-04-30")
-        ? levelInfo[4]
-        : levelInfo[levelIndex + 1] || levelInfo[levelIndex]
-
-  const progress = {
-    // 0으로 나누지 못하도록 예외 처리
+function calculateProgress(input: any, nextLevel: any) {
+  return {
     article: nextLevel.criteria.article !== 0 ? (input.article / nextLevel.criteria.article) * 100 : 100,
     comment: nextLevel.criteria.comment !== 0 ? (input.comment / nextLevel.criteria.comment) * 100 : 100,
     visit: nextLevel.criteria.visit !== 0 ? (input.visit / nextLevel.criteria.visit) * 100 : 100,
-    week: nextLevel.criteria.joinWeek !== 0 ? (weekDifference / nextLevel.criteria.joinWeek) * 100 : 100,
+    week: nextLevel.criteria.joinWeek !== 0 ? (input.weekDifference / nextLevel.criteria.joinWeek) * 100 : 100,
   }
+}
+
+export const calcLevel = (input: { article: number; comment: number; visit: number; date: string }) => {
+  const { day: dayDifference, week: weekDifference } = _calcDifference(new Date(input.date))
+
+  const easterEgg = checkEasterEgg(input)
+  if (easterEgg) {
+    const nextLevel = easterEgg.id === "158" || easterEgg.id === "116" ? levelInfo[2] : levelInfo[4]
+
+    return {
+      ...easterEgg,
+      nextLevel,
+      progress: calculateProgress({ ...input, weekDifference }, nextLevel),
+      difference: { day: dayDifference, week: weekDifference },
+    }
+  }
+
+  const result = levelInfo
+    .map(x => x)
+    .reverse()
+    .find(
+      level =>
+        input.article >= level.criteria.article &&
+        input.comment >= level.criteria.comment &&
+        input.visit >= level.criteria.visit &&
+        weekDifference >= level.criteria.joinWeek,
+    )
+
+  if (!result) throw new InvalidInputError()
+
+  const levelIndex = levelInfo.findIndex(x => x.id === result.id)
+  if (levelIndex < 0) throw new InvalidInputError()
+
+  const nextLevel = levelInfo[levelIndex + 1] || levelInfo[levelIndex]
 
   return {
     ...result,
     index: levelIndex,
     nextLevel,
-    progress,
-    difference: {
-      day: dayDifference,
-      week: weekDifference,
-    },
+    progress: calculateProgress({ ...input, weekDifference }, nextLevel),
+    difference: { day: dayDifference, week: weekDifference },
   }
 }
 
