@@ -26,7 +26,6 @@ export default function App() {
         window.localStorage.removeItem("eruda-resources")
         window.localStorage.removeItem("eruda-sources")
 
-        //@ts-expect-error - eruda is a global variable
         window.eruda.init()
       }
     }

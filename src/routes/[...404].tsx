@@ -49,6 +49,7 @@ export default function NotFound() {
         <BlueScreen.EasterEgg
           src={easterEggRandom() === 0 ? oppositeSegu : jinhe}
           alt={easterEggRandom() === 0 ? "뒤집힌 세구~" : "혹시 우리 차기는 이름이 뭐야?"}
+          title={easterEggRandom() === 0 ? "뒤집힌 세구~" : "혹시 우리 차기는 이름이 뭐야?"}
           onClick={() => {
             window.open(easterEggRandom() === 0 ? "https://youtu.be/zp_dEdyH_vg" : "https://youtu.be/06al4daDPQ8")
           }}
