@@ -3,8 +3,8 @@ import { CafeMemberLevelInfo } from "~/types/cafeMemberLevelInfo"
 export const levelInfo = [
   {
     id: "0",
-    name: "아메바",
-    description: "아메바와 같은 상태",
+    name: "미개",
+    description: "가입 후 막 활동을 시작해 어떻게 해야 할 줄 모르는 미개한 상태",
     criteria: {
       article: 0,
       comment: 0,
@@ -14,8 +14,8 @@ export const levelInfo = [
   },
   {
     id: "1_110",
-    name: "진드기",
-    description: "활동은 하지 않으며 남의 게시글만 보고 맛보고 뜯는 단계이다",
+    name: "노비",
+    description: "아직 미개하나 주어진 활동을 반복적으로 해 나가는 상태",
     criteria: {
       article: 0,
       comment: 1,
@@ -25,8 +25,8 @@ export const levelInfo = [
   },
   {
     id: "1_120",
-    name: "닭둘기",
-    description: "더욱 열심히 온갖 쓰레기를 다 먹고 다니는 단계",
+    name: "갓수",
+    description: "카페에 통달하여 자유함을 얻은 상태나 미개함이 노비와 같은 상태",
     criteria: {
       article: 50,
       comment: 250,
@@ -36,35 +36,35 @@ export const levelInfo = [
   },
   {
     id: "1_130",
-    name: "왁무새",
-    description: "이제 훌륭한 동물이 되었으나 가끔씩 다른 무새로 변할 때가 있다.",
+    name: "핫산",
+    description: "많은 활동을 하였으나 회원들이 날 보는 시선이 곱지많은 않다",
     criteria: {
-      article: 300,
-      comment: 700,
+      article: 100,
+      comment: 500,
       visit: 500,
-      joinWeek: 12,
+      joinWeek: 4,
     },
   },
   {
     id: "1_140",
-    name: "침팬치",
-    description: "입을 다물고 있으면 언뜻 사람같지만 쉽게 흥분한다.",
+    name: "왁창",
+    description: "카페를 탈퇴할지 계속 활동할지 고민하는 단계 (노력으로 올 수 있는 단계)",
     criteria: {
-      article: 700,
-      comment: 1500,
+      article: 300,
+      comment: 1000,
       visit: 1000,
-      joinWeek: 16,
+      joinWeek: 12,
     },
   },
   {
     id: "1_150",
-    name: "느그자",
-    description: "백수의 왕이다.",
+    name: "노숙자",
+    description: "카페에서 노숙 활동을 이어가고 있는 사람이다.",
     criteria: {
       article: 1000,
       comment: 5000,
       visit: 5000,
-      joinWeek: 30,
+      joinWeek: 24,
     },
   },
 ] as CafeMemberLevelInfo[]
