@@ -118,7 +118,7 @@ function FooterContent(props: { readonly result: ReturnType<typeof calcLevel>; r
 
       <Show when={props.result.index == 9}>
         <ResultTableStyle.Footer.EstimatedDate.Text>
-          느그자의 부름에 응한다..!
+          노숙자의 부름에 응한다..!
         </ResultTableStyle.Footer.EstimatedDate.Text>
       </Show>
 
@@ -152,7 +152,7 @@ function FooterContent(props: { readonly result: ReturnType<typeof calcLevel>; r
           }
         >
           <ResultTableStyle.Footer.EstimatedDate.Text>
-            느그자 개체수가 너무 많아요...
+            노숙자 냄시가 너무 심해요..
           </ResultTableStyle.Footer.EstimatedDate.Text>
 
           <ResultTableStyle.Footer.EstimatedDate.Text>환생 ㄱ?</ResultTableStyle.Footer.EstimatedDate.Text>
@@ -276,8 +276,8 @@ export default function ResultTable(props: { readonly data: typeof inputData; re
           <div>
             <ResultTableStyle.Header.LevelName isDarkMode={false}>{result()!.name}</ResultTableStyle.Header.LevelName>
             <ResultTableStyle.Header.Detail isDarkMode={false}>
-              {((props.data.article * 5 + props.data.comment + props.data.visit) / 15000).toFixed(3)} GZA,{" "}
-              {((props.data.comment + props.data.visit / 3) / 2).toFixed(3)} ZDG
+              {((props.data.article * 5 + props.data.comment + props.data.visit) / 15000).toFixed(3)} NSJ,{" "}
+              {((props.data.comment + props.data.visit / 3) / 2).toFixed(3)} NBI
             </ResultTableStyle.Header.Detail>
           </div>
 

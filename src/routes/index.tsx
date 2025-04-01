@@ -17,7 +17,7 @@ import { LevelInfo } from "~/styles/components/levelInfo"
 import Footer from "~/components/Footer"
 import ResultTable from "~/components/ResultTable"
 
-import wakzooLogo from "~/assets/images/wakzoo.svg"
+import wakkiLogo from "~/assets/images/wakki.svg"
 
 export default function Result() {
   const navigate = useNavigate()
@@ -171,7 +171,7 @@ export default function Result() {
               >
                 <Logo currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}>
                   <Logo.Image
-                    src={wakzooLogo}
+                    src={wakkiLogo}
                     currentStep={searchParams.data && isLoading() !== "TRUE" ? "RESULT" : "MAIN"}
                     alt="Wakulator Logo"
                   />
